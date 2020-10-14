@@ -1,4 +1,5 @@
 <div class="questionnaire-container" *ngIf="(dataLoaded | async)">
+    <div align="center"><i> <img src="assets/images/logo.png" alt="" height="80" width="80"> </i></div>
     <h2 matDialogTitle>{{TITLE}}</h2><br>
     <text-card mainMessage="{{MAIN_MESSAGE}}" [bulletedMessages]="BULLETED_INSTRUCTIONS" [instructionsTitle]="INSTRUCTIONS_TITLE"></text-card>
     <br>
@@ -38,9 +39,13 @@
     <div class="questionnaire-footer" *ngIf="foodItems.length > 0">
       <button mat-raised-button
               (click)="submitQuestionnaire()"
-              color="primary">Submit</button>
+              color="primary"
+              [disabled]="submitting">Submit</button>    
     </div>
     <div class="questionnaire-footer" *ngIf="foodItems.length < 1">
       <mat-label style="color: red">Server returned 0 food items. Please contact administrator.</mat-label>
+    </div>
+    <div class="fixed-bottom">
+      <mat-progress-bar mode="indeterminate" *ngIf="submitting"></mat-progress-bar>
     </div>
 </div>

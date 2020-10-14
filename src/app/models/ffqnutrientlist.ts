@@ -26,9 +26,9 @@ export class nutrientMap {
   "Thiamin (vitamin B1) (mg)" : number;
   "Riboflavin (vitamin B2) (mg)" : number;
   "Niacin (vitamin B3) (mg)" : number;
-  "Pantothenic Acid (mg)" : number;
+  "Vitamin B5 (Pantothenic acid) (mg)" : number;
   "Vitamin B-6 (pyridoxine, pyridoxyl, & pyridoxamine) (mg)" : number;
-  "Total Folate (mcg)" : number;
+  "Vitamin B9 (Folate) (mcg)" : number;
   "Vitamin B-12 (cobalamin) (mcg)" : number;
   "Calcium (mg)" : number;
   "Phosphorus (mg)" : number;
@@ -47,9 +47,9 @@ export class nutrientMap {
     this["Thiamin (vitamin B1) (mg)"] = 0;
     this["Riboflavin (vitamin B2) (mg)"] = 0;
     this["Niacin (vitamin B3) (mg)"] = 0;
-    this["Pantothenic Acid (mg)"] = 0;
+    this["Vitamin B5 (Pantothenic acid) (mg)"] = 0;
     this["Vitamin B-6 (pyridoxine, pyridoxyl, & pyridoxamine) (mg)"] = 0;
-    this["Total Folate (mcg)"] = 0;
+    this["Vitamin B9 (Folate) (mcg)"] = 0;
     this["Vitamin B-12 (cobalamin) (mcg)"] = 0;
     this["Calcium (mg)"] = 0;
     this["Phosphorus (mg)"] = 0;

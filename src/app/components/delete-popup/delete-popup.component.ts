@@ -10,7 +10,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogPopupComponent } from '../error-dialog-popup/error-dialog-popup.component';
 import { FFQClinicianResponse } from 'src/app/models/ffqclinician-response';
 import { ClinicianService } from 'src/app/services/clinician/clinician-service';
@@ -49,8 +49,8 @@ export class DeletePopupComponent implements OnInit{
         private errorDialog: MatDialog,
         public clinicianService: ClinicianService,
         public parentService: ParentService,
-        public clinicService: ClinicService, 
-        
+        public clinicService: ClinicService,
+
     ) {}
 
     /* When confirmed deletion, this function does the delete action on the object based on its type */
@@ -58,7 +58,7 @@ export class DeletePopupComponent implements OnInit{
         if(this.isClinician)
         {
             var userName = (<FFQClinicianResponse>this.attributes).username;
-            this.clinicianService.deleteItem((<FFQClinicianResponse>this.attributes).userId).subscribe( user => { 
+            this.clinicianService.deleteItem((<FFQClinicianResponse>this.attributes).userId).subscribe( user => {
             this.router.navigateByUrl('/admin/users');
             const dialogRef = this.errorDialog.open(ErrorDialogPopupComponent);
             dialogRef.componentInstance.title = 'Clinician ' + userName + ' was deleted';
@@ -67,7 +67,7 @@ export class DeletePopupComponent implements OnInit{
         else if(this.isParent)
         {
             var userName = (<FFQClinicianResponse>this.attributes).username;
-            this.parentService.deleteItem((<FFQClinicianResponse>this.attributes).userId).subscribe( user => { 
+            this.parentService.deleteItem((<FFQClinicianResponse>this.attributes).userId).subscribe( user => {
             this.router.navigateByUrl('/admin/users');
             const dialogRef = this.errorDialog.open(ErrorDialogPopupComponent);
             dialogRef.componentInstance.title = 'Parent ' + userName + ' was deleted';
@@ -76,7 +76,7 @@ export class DeletePopupComponent implements OnInit{
         else if(this.isClinic)
         {
             var clinicName = (<FFQClinicResponse>this.attributes).clinicname;
-            this.clinicService.deleteItem((<FFQClinicResponse>this.attributes).clinicId).subscribe( clinic => { 
+            this.clinicService.deleteItem((<FFQClinicResponse>this.attributes).clinicId).subscribe( clinic => {
             this.router.navigateByUrl('/admin/clinics');
             const dialogRef = this.errorDialog.open(ErrorDialogPopupComponent);
             dialogRef.componentInstance.title = 'Clinic ' + clinicName + ' was deleted';

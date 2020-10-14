@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FoodItemService } from '../../services/food-item/food-item.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -60,7 +60,7 @@ export class FooditemComponent implements OnInit {
     const FoodItemObjectId = this.route.snapshot.paramMap.get('id');
 
     if (FoodItemObjectId == "new"){
-      
+
       this.isNew = true;
 
       this.ffqfoditem = new FFQFoodItem("");
@@ -94,25 +94,25 @@ export class FooditemComponent implements OnInit {
 
     // retrieve the food item
     this.foodService.getFoodbyName(name).subscribe(data => {
-      
+
       //retrieve the nutrients lists for each food item's food type
       for (let i of data.foodItem.foodTypes) {
-        
+
         this.nutrientsService.getNutrientsById(i.nutrientListID).subscribe(nutrientList => {
 
           this.nutrientsMap.set(i.nutrientListID, nutrientList.nutrientMap);
-        });        
+        });
       }
-      
+
       console.log(this.nutrientsMap);
-      
-      
+
+
       this.foodNutrientsItem.push(FFQFoodNutrients.foodItemFromResponse(data))
     });
     this.dataLoaded = Promise.resolve(true);
   }
 
-  private addFoodNutrients(){  
+  private addFoodNutrients(){
 <<<<<<< HEAD
 
     console.log(this.foodNutrientsItem[0]);
@@ -128,7 +128,7 @@ export class FooditemComponent implements OnInit {
       data => {this.router.navigateByUrl('/admin'); dialogRef.componentInstance.title = 'Food item added/updated succesfully!';}
 >>>>>>> origin_daykelm
     );
-    
+
   }
 
   trackByFn(item, id){

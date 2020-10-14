@@ -15,13 +15,14 @@ export class FFQFoodNutrients {
 
     public static foodItemToResponse(fooditem: FFQFoodNutrients): FFQFoodNutrientsResponse
     {
-        const foodItemResponse = new FFQFoodItemResponse(fooditem.foodItem.name, fooditem.foodItem.id);
+        const foodItemResponse = new FFQFoodItemResponse(fooditem.foodItem.name, fooditem.foodItem.id, fooditem.foodItem.itemPosition);
 
         //foodItemResponse.id = fooditem.foodItem.id;
         foodItemResponse.primary = fooditem.foodItem.primary;
         foodItemResponse.foodTypes = fooditem.foodItem.foodTypes;
         foodItemResponse.sugar = fooditem.foodItem.sugar;
         foodItemResponse.portionSize = fooditem.foodItem.portionSize;
+
 
         if(fooditem.foodItem.sugar != null)
         foodItemResponse.sugar = fooditem.foodItem.sugar;
@@ -44,7 +45,7 @@ export class FFQFoodNutrients {
     public static foodItemFromResponse(response: FFQFoodNutrientsResponse): FFQFoodNutrients {
         console.log(response);
 
-        const fooditem = new FFQFoodItem(response.foodItem.name);
+        const fooditem = new FFQFoodItem(response.foodItem.name, response.foodItem.itemPosition);
 
         fooditem.id = response.foodItem.id;
         fooditem.primary = response.foodItem.primary;

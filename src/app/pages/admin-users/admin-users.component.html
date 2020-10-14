@@ -11,11 +11,11 @@
             <input style="width: 25%; display: inline-block;  margin-left: 5px;" placeholder="Search..." type="text" class="form-control" 
                 name="search" [(ngModel)]="search"/>
             <span style="color:gray; margin-left: 20px; margin-right: 20px; font-size: x-large;"> | </span>
-            <mat-checkbox (change)="toggleParents($event)" [checked]="true" color="primary"> Show Parents </mat-checkbox>
+            <mat-checkbox (change)="toggleParents()" [checked]="true" color="primary"> Show Parents </mat-checkbox>
             <span style="color:gray; margin-left: 20px; margin-right: 20px; font-size: x-large;"> | </span>
-            <mat-checkbox (change)="toggleClinicians($event)" [checked]="true" color="primary"> Show Clinicians </mat-checkbox>
+            <mat-checkbox (change)="toggleClinicians()" [checked]="true" color="primary"> Show Clinicians </mat-checkbox>
             <span style="color:gray; margin-left: 20px; margin-right: 20px; font-size: x-large;"> | </span>
-            <mat-checkbox (change)="toggleAdmins($event)" [checked]="true" color="primary"> Show Admins </mat-checkbox>
+            <mat-checkbox (change)="toggleAdmins()" [checked]="true" color="primary"> Show Admins </mat-checkbox>
             <span style="color:gray; margin-left: 20px; margin-right: 20px; font-size: x-large;"> | </span>
             <mat-form-field>
                 <mat-label appearance="fill">Filter by Clinic...</mat-label>

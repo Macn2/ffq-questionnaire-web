@@ -10,6 +10,7 @@ import { ɵangular_packages_forms_forms_q } from '@angular/forms';
 import { Http, Headers, Response, RequestOptions, RequestMethod } from '@angular/http';
 import { FFQFoodItemResponse } from 'src/app/models/ffqfooditem-response';
 import { FFQAdminResponse } from 'src/app/models/ffqadmin-response';
+import { environment } from 'src/environments/environment'
 //const mongoose = require('mongoose');
 //declare var require: any
 //Created by Khalid Alamoudi 
@@ -20,12 +21,9 @@ const httOptions ={ headers: new HttpHeaders({'Content-Type':'aplication/json'})
   providedIn: 'root'
 })
 
-
-
 export class AdminService {
 
-  endpoint = 'http://localhost:9070/ffq/admins';
-  
+  endpoint = environment.userServiceUrl + '/ffq/admins';  
 
   constructor(private http: HttpClient) { } 
 

@@ -27,6 +27,8 @@ export class LoginComponent implements OnInit {
     error = '';
     accountList: string[] = ["admins", "clinicians", "parents"];
     dropDownName: string[] = ["Admin", "Clinician", "Parent"];
+    username = '';
+    password = '';
 
 
     //userType: string;
@@ -66,6 +68,7 @@ export class LoginComponent implements OnInit {
             return;
         }
 
+        this.error = '';
         this.loading = true;
         this.authenticationService.login(this.f.username.value, this.f.password.value/*, this.f.userType.value*/)
             .pipe(first())
@@ -75,8 +78,8 @@ export class LoginComponent implements OnInit {
                    // this.router.navigate([this.returnUrl]);
                    this.router.navigate(['/']);
                 },
-                error => {
-                    this.error = error;
+                err => { 
+                    this.error = err.error.message != undefined ? err.error.message : 'Error trying to login';
                     this.loading = false;
                 });
     }

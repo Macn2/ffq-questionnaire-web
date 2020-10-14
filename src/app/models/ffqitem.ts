@@ -12,6 +12,8 @@ export class FFQItem {
   isSubmitted: boolean;
   isPrimary: boolean;
   foodTypes: FoodType[];
+  /////
+  itemPosition:number;
 
   constructor(name: string) {
     this.name = name;
@@ -23,6 +25,7 @@ export class FFQItem {
     this.isSubmitted = false;
     this.isPrimary = false;
     this.foodTypes = [];
+    this.itemPosition = -1;
   }
 
   public static foodItemFromResponse(response: FFQItemResponse): FFQItem {
@@ -37,6 +40,9 @@ export class FFQItem {
       item.hasSugarSetting = response.sugar.additionalSugar;
     }
     item.isPrimary = response.primary;
+     /////
+     item.itemPosition = response.itemPosition;
+     /////
     return item;
   }
 
