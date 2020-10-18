@@ -10,6 +10,7 @@ import { ɵangular_packages_forms_forms_q } from '@angular/forms';
 import { Http, Headers, Response, RequestOptions, RequestMethod } from '@angular/http';
 import { FFQNutrientlist } from 'src/app/models/ffqnutrientlist';
 import { FFQNutrientsRecommendations } from 'src/app/models/ffqnutrients-recommendations';
+import { environment } from 'src/environments/environment';
 
 const httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
 
@@ -19,7 +20,7 @@ const httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/jso
 
 export class NutrientsRecommendationsService {
 
-  endpoint = 'http://localhost:9090/ffq';
+  endpoint = environment.foodServiceUrl + '/ffq';
 
   constructor(private http: HttpClient) { }
 

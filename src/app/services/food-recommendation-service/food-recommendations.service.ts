@@ -11,6 +11,7 @@ import { Http, Headers, Response, RequestOptions, RequestMethod } from '@angular
 import { FFQNutrientlist } from 'src/app/models/ffqnutrientlist';
 import { FFQNutrientsRecommendations } from 'src/app/models/ffqnutrients-recommendations';
 import { FFQFoodRecommendations } from 'src/app/models/ffqfood-recommendations';
+import { environment } from 'src/environments/environment';
 
 const httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
 
@@ -20,7 +21,7 @@ const httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/jso
 
 export class FoodRecommendationsService {
 
-  endpoint = 'http://localhost:9090/ffq';
+  endpoint = environment.foodServiceUrl + '/ffq';
 
   constructor(private http: HttpClient) { }
 

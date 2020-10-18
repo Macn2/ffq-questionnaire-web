@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map, tap} from 'rxjs/operators';
 import { FFQClinicResponse } from 'src/app/models/ffqclinic-response';
+import { environment } from 'src/environments/environment';
 
 
 const httOptions ={ headers: new HttpHeaders({'Content-Type':'aplication/json'})}
@@ -15,7 +16,7 @@ const httOptions ={ headers: new HttpHeaders({'Content-Type':'aplication/json'})
 
 export class ClinicService {
 
-  endpoint = 'http://localhost:9070/ffq/clinics';
+  endpoint = environment.userServiceUrl + '/ffq/clinics';
   
 
   constructor(private http: HttpClient) { } 

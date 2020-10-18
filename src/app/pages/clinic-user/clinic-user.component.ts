@@ -4,12 +4,12 @@
   This is the edit user page for the clinician portal (clinic/user).
   From here, the clinician can edit parents/clinicians that are assigned to the clinic.
   Parents can also be assigned to an existing clinician here.
-  
+
 */
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogPopupComponent } from 'src/app/components/error-dialog-popup/error-dialog-popup.component';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule, NgForm } from '@angular/forms';
 import { ParentService } from 'src/app/services/parent/parent-service';

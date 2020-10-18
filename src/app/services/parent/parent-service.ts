@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map, tap} from 'rxjs/operators';
 import { FFQParentResponse } from 'src/app/models/ffqparent-response';
+import { environment } from 'src/environments/environment';
 
 //Created by Khalid Alamoudi
 const httOptions ={ headers: new HttpHeaders({'Content-Type':'aplication/json'})}
@@ -13,7 +14,7 @@ const httOptions ={ headers: new HttpHeaders({'Content-Type':'aplication/json'})
 
 export class ParentService {
 
-  endpoint = 'http://localhost:9070/ffq/parents';
+  endpoint = environment.userServiceUrl + '/ffq/parents';
 
 
   constructor(private http: HttpClient) { }

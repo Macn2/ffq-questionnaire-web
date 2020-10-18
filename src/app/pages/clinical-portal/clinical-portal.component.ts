@@ -8,7 +8,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { FFQClinician } from 'src/app/models/ffqclinician';
 import { FFQParent } from 'src/app/models/ffqparent';
 import { FFQClinic } from 'src/app/models/ffqclinic';
@@ -33,8 +33,8 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 
 export class ClinicalPortalComponent implements OnInit  {
 
-  private showClinicians: boolean;
-  private showParents: boolean;
+  public showClinicians: boolean;
+  public showParents: boolean;
   private hideUnassignedParents: boolean;
   private hideUnassignedClinicians: boolean;
   p_search: string;
@@ -66,7 +66,7 @@ export class ClinicalPortalComponent implements OnInit  {
   private parentList: FFQParent[] = [];
   private numberOfPatientz: number[] = [];
   private numberOfChildren: number[] = [];
-  private currentClinicName: string;
+  public currentClinicName: string;
 
   public UserList: User[];
 
