@@ -1,3 +1,4 @@
+
 <admin-header></admin-header>
 
 <form #myForm="ngForm">
@@ -84,6 +85,8 @@
               <mat-radio-button value="parent" (change)="changeToParent($event)" color="primary">Parent</mat-radio-button>
               <br>
               <mat-radio-button value="clinician" (change)="changeToClinician($event)" color="primary">Clinician</mat-radio-button>
+              <br>
+              <mat-radio-button value="researcher" (change)="changeToResearcher($event)" color="primary">Researcher</mat-radio-button>
             </mat-radio-group>
           </div>
 
@@ -95,6 +98,10 @@
               <input placeholder="Amount of Parents (1 - 100)" width="25" style="border-color: mediumblue; border-width: 0.05cm" type="text"
                 class="form-control" name="amountToAdd" [(ngModel)]="amountToAdd" required #nameField="ngModel" />-->
               <hr>
+              <label style="font-weight: bold">Select Quantity:</label>
+                <br>
+                <input type="number" id="parent_quantity" name="quantity" min="1" value="1" style="margin-bottom: 10px">
+                <br>
               <label style="font-weight: bold">Choose Clinic to assign to:</label><label style="font-style: italic; font-size: small; margin-left: 10px"> *required </label>
                 <br>
               <mat-form-field>
@@ -103,6 +110,7 @@
                   <mat-option *ngFor="let c of ffqclinicList" [value]="c.clinicId" >{{ c.clinicname }}</mat-option>
                 </mat-select>
               </mat-form-field>
+              
   
             </div>
           </div>
@@ -114,6 +122,10 @@
           <div class="optional_container" *ngIf="createClinician">
             <div class="form-group col-12">
               <hr>
+              <label style="font-weight: bold">Select Quantity:</label>
+                <br>
+                <input type="number" id="clinician_quantity" name="quantity" min="1" value="1" style="margin-bottom: 10px">
+                <br>
               <label style="font-weight: bold">Choose Clinic to assign to:</label><label style="font-style: italic; font-size: small; margin-left: 10px"> *required </label>
               <br>
               <mat-form-field>
@@ -128,7 +140,34 @@
 
           <!-- Create Clinician ends here -->
 
+          <!-- Create Researcher starts here -->
+
+          <!-- Work In Progress -->
+          <div class="optional_container" *ngIf="createResearcher">
+            <div class="form-group col-12">
+              <!--<label style="font-weight: bold"> Amount </label><label style="font-style: italic; font-size: small; margin-left: 10px"> *required </label>
+              <input placeholder="Amount of Parents (1 - 100)" width="25" style="border-color: mediumblue; border-width: 0.05cm" type="text"
+                class="form-control" name="amountToAdd" [(ngModel)]="amountToAdd" required #nameField="ngModel" />-->
+              <hr>
+              <label style="font-weight: bold">Select Quantity:</label>
+                <br>
+                <input type="number" id="quantity" name="quantity" min="1" value="1" style="margin-bottom: 10px">
+                <br>
+              <label style="font-weight: bold">Choose Clinic to assign to:</label><label style="font-style: italic; font-size: small; margin-left: 10px"> *required </label>
+                <br>
+              <mat-form-field>
+                <mat-label appearance="fill">Choose Clinic...</mat-label>
+                <mat-select matNativeControl required name="assignedclinic" [(ngModel)]="selectedClinic">
+                  <mat-option *ngFor="let c of ffqclinicList" [value]="c.clinicId" >{{ c.clinicname }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              
+  
+            </div>
+          </div>
       </div>
+
+      <!-- Create Researcher ends here -->
 
       <!-- Add user ends here -->
       
@@ -139,3 +178,4 @@
     </div>
   </div>
 </form>
+

@@ -6,6 +6,7 @@
         <div class="buttons">
             <mat-checkbox [checked]="true" (change)="toggleClinicians($event)" style="margin-right: 20px;"> Clinicians </mat-checkbox>
             <mat-checkbox [checked]="true" (change)="toggleParents($event)"> Parents </mat-checkbox>
+            <mat-checkbox [checked]="true" (change)="toggleClinics($event)"> Clinics </mat-checkbox>
         </div>
         <br>
 
@@ -84,6 +85,7 @@
                     <th width="30%"> Parent Name </th>
                     <th width="15%"> No. of Children </th>
                     <th width="25%"> Assigned Clinician </th>
+                    
                 </tr>
                 <tr *ngFor="let u of parentList | searchFilter: p_search; index as i" [hidden]="hideUnassignedParents && !clinicianNames[u.assignedclinician] || (filtered && filtered_clinicians.indexOf(clinicianNames[u.assignedclinician]) === -1)">
                     <!--<td align="center"><mat-checkbox [checked]="toggleAllParents"></mat-checkbox></td>-->
@@ -97,6 +99,54 @@
         </div>
 
         <!-- Parents ends here -->
+
+        <!-- Clinics starts here -->
+
+        <div *ngIf="showClinics">
+            <label style="font-weight:bold"> Clinics </label>
+
+            <div style="width: 100%; white-space:nowrap; overflow-x: auto">
+                <!--<mat-checkbox (change)="selectAllParents($event)"> Select All Parents </mat-checkbox>-->
+                <input style="width: 25%; display: inline-block;  margin-left: 5px;" placeholder="Search..." type="text" class="form-control"
+                    name="p_search" [(ngModel)]="p_search"/>
+                <span style="color:gray; margin-left: 20px; margin-right: 20px; font-size: x-large;"> | </span>
+                <mat-checkbox (change)="toggleUnassignedParents($event)"> Hide All Unassigned </mat-checkbox>
+                <span style="color:gray; margin-left: 20px; margin-right: 20px; font-size: x-large;"> | </span>
+                <!--<mat-form-field>
+                    <mat-label appearance="fill">Assign to Clinician...</mat-label>
+                    <mat-select matNativeControl>
+                      <mat-option *ngFor="let u of ffqclinicianList">{{u.role}} {{u.firstname }} {{ u.lastname }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button style="font-family: Roboto; margin-left: 10px;"> OK </button>
+                <span style="color:gray; margin-left: 20px; margin-right: 20px; font-size: x-large;"> | </span>-->
+                <mat-form-field>
+                    <mat-label appearance="fill">Filter by Clinician...</mat-label>
+                    <mat-select matNativeControl multiple>
+                      <mat-option *ngFor="let u of ffqclinicianList" [hidden]="u.assignedclinic != clinicId" (click)="filterByClinician(u.abbreviation + ' ' + u.firstname + ' ' + u.lastname)">{{ u.abbreviation }} {{ u.firstname }} {{ u.lastname }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <!--<span style="color:gray; margin-left: 20px; margin-right: 20px; font-size: x-large;"> | </span>
+                <button style="font-family: Roboto"><i class="fa fa-trash"></i> Delete </button>-->
+            </div>
+
+            <table class="table table-bordered table-inverse">
+                <tr>
+                    <!--<th width="5%"> Select </th>-->
+                    <th width="20%"> Clinic Name </th>
+                    <th width="20%"> User Limit </th>
+                    
+                </tr>
+                <tr *ngFor="let u of clinicList | searchFilter: p_search; index as i" [hidden]="">
+                    <!--<td align="center"><mat-checkbox [checked]="toggleAllParents"></mat-checkbox></td>-->
+                    <td> {{ u.clinicname}} </td>
+                    <td> {{ u.usersLimit}} </td>
+                </tr>
+            </table>
+
+        </div>
+
+        <!-- Clinics ends here -->
 
 	</div>
 </div>

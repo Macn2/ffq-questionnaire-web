@@ -4,7 +4,7 @@
   }
   
   .container_page{
-    padding-top: 140px;
+    padding-top: 200px;
     margin-bottom: 50px;
   }
   .container-choices{
@@ -20,6 +20,11 @@
   
   .mat-raised-button{
     background-color: #B64D3E;
+    color: white;
+  }
+
+  .feedback-btn{
+    background-color: #e2dddc;
     color: white;
   }
 

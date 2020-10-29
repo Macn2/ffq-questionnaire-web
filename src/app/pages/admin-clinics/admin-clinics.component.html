@@ -5,7 +5,7 @@
         <button routerLink='/admin/clinic/new' type="submit" mat-raised-button>New Clinic...</button>
     </div>
     <div class="container mt-3">
-        <span> {{ ffqclinicList.length }} clinic(s) </span>
+        <span> {{ ffqclinicList.length }} {{ ffqclinicList.length | i18nPlural: {'=1': 'clinic', 'other': 'clinics'} }} </span>
         <table class="table table-bordered table-inverse">
         <tr>
             <th width="20"> Clinic Name </th>
@@ -14,6 +14,7 @@
             <!--<th width="14%"> Integration Date </th>-->
             <th width="13.5%"> No. of Clinicians </th>
             <th width="12.5%"> No. of Parents </th>
+            <th width="12.5%"> Users Limit </th>
         </tr>
         <tr *ngFor="let c of ffqclinicList; index as i">
             <td><a [routerLink]="['/admin/clinic/', c.clinicId]"> {{ c.clinicname }} </a></td>
@@ -22,8 +23,9 @@
             <!--<td> {{ c.datebuilt }} </td>-->
             <td> {{ (ffqclinicianList | clinicianFilter: c.clinicId).length }} </td>
             <td> {{ (ffqparentList | parentFilter: c.clinicId).length }} </td>
+            <td> {{ c.usersLimit }} </td>
         </tr>
         </table>
-       
+
     </div>
 </div>

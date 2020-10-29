@@ -9,7 +9,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FoodItemService } from '../../services/food-item/food-item.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -18,6 +18,10 @@ import { FFQFoodNutrientsResponse } from 'src/app/models/ffqfoodnutrients-respon
 import { PopupComponent } from 'src/app/components/popup/popup.component';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { FFQFoodItemResponse } from 'src/app/models/ffqfooditem-response';
+import { moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -26,10 +30,16 @@ import { FFQFoodItemResponse } from 'src/app/models/ffqfooditem-response';
   styleUrls: ['./admin-page.component.css']
 })
 
+
+
+
 export class AdminPageComponent implements OnInit {
 
   TITLE = 'FFQR Admin Portal';
 
+
+
+    endpoint = environment.foodServiceUrl + '/ffq';
 
   constructor(public foodService: FoodItemService,
               private activatedRoute: ActivatedRoute,
@@ -40,7 +50,7 @@ export class AdminPageComponent implements OnInit {
               private router: Router,
               private modalService: NgbModal,
               private flashMessage: FlashMessagesService,
-
+              private http: HttpClient
   ) { }
 
 
@@ -50,11 +60,22 @@ export class AdminPageComponent implements OnInit {
   foodItems: FFQFoodItemResponse[] = [];
 
 
-  ngOnInit() {
-    this.loadFoodsAndNutrients();
-    console.log(this.foodNutrients);
 
+  ngOnInit() {
+
+
+      this.loadFoodsAndNutrients();
+
+
+
+    /*let i: any;
+
+        for(i in this.foodItems){
+          this.foodItems[i].itemPosition = ++i;
+        }*/
   }
+
+
 
   private handleFoodServiceError(error: HttpErrorResponse) {
     console.error('Error occurred.\n' + error.message);
@@ -75,8 +96,16 @@ export class AdminPageComponent implements OnInit {
       });
       console.log(this.foodItems);
       console.log(this.foodNutrients.length + ' foods and its nutrients were returned from server.');
+      this.foodItems = this.orderFoodItems(this.foodItems);
       this.dataLoaded = Promise.resolve(true);
     }, (error: HttpErrorResponse) => this.handleFoodServiceError(error));
+
+
+  }
+  //added by teriq douglas
+  private orderFoodItems(items: FFQFoodItemResponse[]){
+    var orderedItems = items.sort(function(a, b){return a.itemPosition - b.itemPosition});
+    return orderedItems;
   }
 
 
@@ -84,9 +113,67 @@ export class AdminPageComponent implements OnInit {
     const modalRef = this.modalService.open(PopupComponent);
     modalRef.componentInstance.id = id;
     modalRef.componentInstance.service = this.foodService;
-    
+
   }
 
+  //added by teriq douglas
+  onDrop(event: CdkDragDrop<string[]>){
+    moveItemInArray(this.foodItems, event.previousIndex, event.currentIndex);
+    let i: any;
+
+    //update each food item with a new itemPosition
+    for(i in this.foodItems){
+              this.foodItems[i].itemPosition = ++i;
+            }
+    //for loop with put calls for each element
+    for(let i = 0; i < this.foodItems.length; i++){
+
+
+      this.update(i);
+    }
+
+
+
+
+    //or swap only 2 elements
+    /*var temp = this.foodItems[event.previousIndex].itemPosition;
+            this.foodItems[event.previousIndex].itemPosition = this.foodItems[event.currentIndex].itemPosition
+            this.foodItems[event.currentIndex].itemPosition = temp;*/
+
+    /*this.http.put(this.endpoint + '/update/' + this.foodItems[event.currentIndex].id, this.foodItems[event.currentIndex],
+                      {headers : new HttpHeaders({ 'Content-Type': 'application/json' })}).subscribe((data) => {
+                                    console.log(data);
+                                  }, (error) => {console.log(error)});
+
+    this.http.put(this.endpoint + '/update/' + this.foodItems[event.previousIndex].id, this.foodItems[event.previousIndex],
+                           {headers : new HttpHeaders({ 'Content-Type': 'application/json' })}).subscribe((data) => {
+                                         console.log(data);
+                                       }, (error) => {console.log(error)});*/
+
+
+
+
+
+    console.log(this.foodItems);
+
+
+
+  }
+
+  //added by teriq douglas
+  update(i: any){
+
+    this.http.put(this.endpoint + '/update/' + this.foodItems[i].id, this.foodItems[i],
+                                {headers : new HttpHeaders({ 'Content-Type': 'application/json' })}).subscribe((data) => {
+                                              console.log(data);
+                                            }, (error) => {console.log(error)});
+//console.log(this.foodItems[i].id);
+  }
+ /* private updateArray(){
+    this.foodService.getAllFoods().subscribe(data => {
+          data.map(response => {
+            this.foodItems.push(response);
+          });*/
 
 }
 

@@ -3,7 +3,7 @@ import {FFQItemResponse, FoodType} from './ffqitem-response';
 import {Serving} from './ffqitem-response';
 import { FFQFoodNutrientsResponse } from './ffqfoodnutrients-response';
 
-export class FFQNutrientlist {  
+export class FFQNutrientlist {
   id: string;
   nutrientListID: string;
   nutrientMap: any;
@@ -16,20 +16,20 @@ export class FFQNutrientlist {
 }
 
 export class nutrientMap {
-  
+
   // only includes the 19 main nutrients used for recomendations
   "Retinol (mcg)" : number;
-  "Vitamin D (calciferol) (mcg)" : number;
-  "Vitamin E (Total Alpha-Tocopherol) (mg)" : number;
-  "Vitamin K (phylloquinone) (mcg)" : number;
-  "Vitamin C (ascorbic acid) (mg)" : number;
-  "Thiamin (vitamin B1) (mg)" : number;
-  "Riboflavin (vitamin B2) (mg)" : number;
-  "Niacin (vitamin B3) (mg)" : number;
-  "Pantothenic Acid (mg)" : number;
-  "Vitamin B-6 (pyridoxine, pyridoxyl, & pyridoxamine) (mg)" : number;
-  "Total Folate (mcg)" : number;
-  "Vitamin B-12 (cobalamin) (mcg)" : number;
+  "Vitamin D (mcg)" : number;
+  "Vitamin E (mg)" : number;
+  "Vitamin K (mcg)" : number;
+  "Vitamin C (Ascorbic acid) (mg)" : number;
+  "Vitamin B1 (Thiamin) (mg)" : number;
+  "Vitamin B2 (Riboflavin) (mg)" : number;
+  "Vitamin B3 (Niacin) (mg)" : number;
+  "Vitamin B5 (Pantothenic acid) (mg)" : number;
+  "Vitamin B6 (mg)" : number;
+  "Vitamin B9 (Folate) (mcg)" : number;
+  "Vitamin B12 (Cobalamin) (mcg)" : number;
   "Calcium (mg)" : number;
   "Phosphorus (mg)" : number;
   "Magnesium (mg)" : number;
@@ -40,17 +40,17 @@ export class nutrientMap {
 
   constructor(typeName: string, nutrientListID: string){
     this["Retinol (mcg)"] = 0;
-    this["Vitamin D (calciferol) (mcg)"] = 0;
-    this["Vitamin E (Total Alpha-Tocopherol) (mg)"] = 0;
-    this["Vitamin K (phylloquinone) (mcg)"] = 0;
-    this["Vitamin C (ascorbic acid) (mg)"] = 0;
-    this["Thiamin (vitamin B1) (mg)"] = 0;
-    this["Riboflavin (vitamin B2) (mg)"] = 0;
-    this["Niacin (vitamin B3) (mg)"] = 0;
-    this["Pantothenic Acid (mg)"] = 0;
-    this["Vitamin B-6 (pyridoxine, pyridoxyl, & pyridoxamine) (mg)"] = 0;
-    this["Total Folate (mcg)"] = 0;
-    this["Vitamin B-12 (cobalamin) (mcg)"] = 0;
+    this["Vitamin D (mcg)"] = 0;
+    this["Vitamin E (mg)"] = 0;
+    this["Vitamin K (mcg)"] = 0;
+    this["Vitamin C (Ascorbic acid) (mg)"] = 0;
+    this["Vitamin B1 (Thiamin) (mg)"] = 0;
+    this["Vitamin B2 (Riboflavin) (mg)"] = 0;
+    this["Vitamin B3 (Niacin) (mg)"] = 0;
+    this["Vitamin B5 (Pantothenic acid) (mg)"] = 0;
+    this["Vitamin B6 (mg)"] = 0;
+    this["Vitamin B9 (Folate) (mcg)"] = 0;
+    this["Vitamin B12 (Cobalamin) (mcg)"] = 0;
     this["Calcium (mg)"] = 0;
     this["Phosphorus (mg)"] = 0;
     this["Magnesium (mg)"] = 0;

@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map, tap} from 'rxjs/operators';
 import { FFQClinicResponse } from 'src/app/models/ffqclinic-response';
+import { environment } from 'src/environments/environment';
 
 
 const httOptions ={ headers: new HttpHeaders({'Content-Type':'aplication/json'})}
@@ -15,24 +16,24 @@ const httOptions ={ headers: new HttpHeaders({'Content-Type':'aplication/json'})
 
 export class ClinicService {
 
-  endpoint = 'http://localhost:9070/ffq/clinics';
-  
+  endpoint = environment.userServiceUrl + '/ffq/clinics';
 
-  constructor(private http: HttpClient) { } 
+
+  constructor(private http: HttpClient) { }
 
   addClinic(user : FFQClinicResponse): Observable<any> {
-    
+
     return this.http.post(this.endpoint + '/createclinic', user, {headers : new HttpHeaders({ 'Content-Type': 'application/json' })}).pipe(
-      tap( 
+      tap(
         data => console.log(data),
         error => console.log(error)
       ));
   }
 
   updateClinic(user : FFQClinicResponse): Observable<any> {
-    
+
     return this.http.put(this.endpoint + '/updateclinic', user, {headers : new HttpHeaders({ 'Content-Type': 'application/json' })}).pipe(
-      tap( 
+      tap(
         data => console.log(data),
         error => console.log(error)
       ));
@@ -40,42 +41,18 @@ export class ClinicService {
 
 
   getClinic(clinicId: string): Observable<FFQClinicResponse> {
-    return this.http.get(this.endpoint + '/' + clinicId).pipe(
-      map((item: any) => {
-          return new FFQClinicResponse(
-            item.clinicId,
-            item.address,
-            item.dateBuilt,
-            item.clinicname,
-            item.headclinician,
-            item.isactive
-          );
-      })
-    );
+    return this.http.get<FFQClinicResponse>(this.endpoint + '/' + clinicId);
   }
 
 
   getAllClinics(): Observable<FFQClinicResponse[]> {
-    return this.http.get(this.endpoint + '/all').pipe(
-      map((res: any) => {
-        return res.map(item => {
-          return new FFQClinicResponse(
-            item.clinicId,
-            item.address,
-            item.datebuilt,
-            item.clinicname,
-            item.headclinician,
-            item.isactive
-          );
-        });
-      })
-    );
+    return this.http.get<FFQClinicResponse[]>(this.endpoint + '/all');
   }
 
   /*DELETE: delete food item from the database */
   deleteItem(clinicId: string): Observable <any>{
     console.log("here" + clinicId);
-    return this.http.delete(this.endpoint + "/delete?clinicId=" + clinicId,  { responseType: 'text' })  
+    return this.http.delete(this.endpoint + "/delete?clinicId=" + clinicId,  { responseType: 'text' })
   }
 
 

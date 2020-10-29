@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map, tap} from 'rxjs/operators';
 import { FFQResultsResponse } from 'src/app/models/ffqresultsresponse';
+import { environment } from 'src/environments/environment';
 
 // Added by Dariana Gonzalez on 10/13/2019
 
@@ -14,7 +15,7 @@ const httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/jso
 
 export class ResultsService {
 
-  endpoint = 'http://localhost:9090/ffq/results';
+  endpoint = environment.foodServiceUrl + '/ffq/results';
 
   constructor(private http: HttpClient) { }
 
@@ -29,7 +30,9 @@ export class ResultsService {
             item.ageInMonths,
             item.userChoices,
             item.weeklyTotals,
-            item.dailyAverages
+            item.dailyAverages,
+            item.feedback,
+            item.gender
           );
         });
       }));
@@ -46,9 +49,18 @@ export class ResultsService {
               item.ageInMonths,
               item.userChoices,
               item.weeklyTotals,
-              item.dailyAverages
+              item.dailyAverages,
+              item.feedback,
+              item.gender
             );
           });
         }));
+      }
+
+      submitFeedback(id: string, feedback: string): Observable<any> {
+        return this.http.put(this.endpoint + '/update', {
+          questionnaireId: id,
+          feedback: feedback
+        });
       }
   }

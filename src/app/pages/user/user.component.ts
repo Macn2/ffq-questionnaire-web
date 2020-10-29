@@ -10,7 +10,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogPopupComponent } from 'src/app/components/error-dialog-popup/error-dialog-popup.component';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule, NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs/internal/Subscription';
@@ -124,9 +124,20 @@ export class UserComponent implements OnInit {
 
   private addUser()
   {
+
+    var input = <HTMLInputElement>document.getElementById("clinician_quantity");
+    var amount : number = parseInt(input.value);
+
      if(this.createClinician == true)
      {
+       if(amount <= 1){
         this.addClinician();
+       }else{
+        console.log("adding multiple clinicians")
+        this.addMultipleClinicians();
+        
+       }
+        
      }
      else
      {
@@ -137,7 +148,7 @@ export class UserComponent implements OnInit {
      }
   }
 
-  addClinician()
+  async addClinician()
   {
     var clinicianList: Observable<FFQClinicianResponse[]> = this.clinicianService.getAllClinicians();
 
@@ -160,6 +171,44 @@ export class UserComponent implements OnInit {
         });
 
       });
+  }
+
+  addMultipleClinicians()
+  {
+    //Still work in progress
+
+    var clinicianList: Observable<FFQClinicianResponse[]> = this.clinicianService.getAllClinicians();
+
+    var input = <HTMLInputElement>document.getElementById("clinician_quantity");
+    var amount : number = parseInt(input.value);
+
+    var new_clinicians = new Array();
+
+      for(let i = 0; i < amount; i++){
+
+        clinicianList.subscribe(data => {
+          var numberOfClinicians = (data.length + 1 + i).toString();
+          var newClincianId = (data.length+ 1 + i).toString();
+          var newClincianUsername = "clinician"+numberOfClinicians;
+          new_clinicians.push(new FFQClinician(newClincianId, newClincianUsername, newClincianUsername, "clinician", "", "", "", this.selectedClinic, [], true));
+        });
+
+      }
+
+      for(let j = 0; j < amount; j++){
+
+        this.clinicianService.addClinician(new_clinicians[j]).subscribe(data => {
+          this.router.navigateByUrl('/admin/users');
+        },
+        error =>{
+          const dialogRef = this.errorDialog.open(ErrorDialogPopupComponent);
+          dialogRef.componentInstance.title = error.error.message;
+        });
+
+      }
+
+      const dialogRef = this.errorDialog.open(ErrorDialogPopupComponent);
+      dialogRef.componentInstance.title = amount + ' new clinicians have been added';
   }
 
   addParent()

@@ -42,10 +42,10 @@ export class AdminClinicsComponent implements OnInit {
 
   /* Loads all the data necessary to fill out the table in the html component */
   ngOnInit() {
-    
+
     this.clinicianNames.push("");
 
-    var clinicList: Observable<FFQClinicResponse[]> = this.clinicService.getAllClinics();
+    const clinicList: Observable<FFQClinicResponse[]> = this.clinicService.getAllClinics();
     clinicList.subscribe(a => {
       this.ffqclinicList = a;
       //console.log(a);

@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import { QuestionnaireValidatorService } from '../../services/questionnaire-validator/questionnaire-validator.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ErrorDialogPopupComponent} from '../../components/error-dialog-popup/error-dialog-popup.component';
-import {MatDialog} from '@angular/material';
 import {FFQItem} from '../../models/ffqitem';
 import {FoodItemService} from '../../services/food-item/food-item.service';
 import {log} from 'util';
@@ -16,6 +15,7 @@ import {FFQResult} from '../../models/FFQResult';
 import {NutrientConstants} from '../../models/NutrientConstants';
 import { Validators, FormControl } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-questionnaire-page',
@@ -31,19 +31,22 @@ export class QuestionnairePageComponent implements OnInit {
   BULLETED_INSTRUCTIONS = [
     'For each entry, enter the number of times a food was consumed by your baby and\n' +
     ' specify whether this was per week or per day.',
-    'If your baby did not eat this food in the last week, close out the question block for that food.',
+    "If your baby did not eat this food in the last week, hit 'x' for not applicable",
     'All open question blocks must be completely filled out before submitting the questionnaire.',
-    'Click the submit button when finished.'
+    'Click the submit button at the bottom of the from when finished.'
   ];
   userId: string;
   id: string;
+  gender: string;
   infantage: number;
   questionnaire: QuestionnaireResponse;
   hideSecondaryItems = false;
   dataLoaded: Promise<boolean>;
 
   foodItems: FFQItem[] = [];
+  tmpfoodItems: FFQItem[] = [];
 
+  submitting = false;
 
 
 
@@ -62,29 +65,20 @@ export class QuestionnairePageComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
         this.userId = this.authenticationService.currentUserId;
         this.id = params.get('id');
-        this.questService.getQuestionnaireId(this.id).subscribe((data: QuestionnaireResponse) => {
-          this.questionnaire = data;
-          if (data.exists) {
-            if (data.submitted) {
-              this.router.navigateByUrl('/');
-              const dialogRef = this.errorDialog.open(ErrorDialogPopupComponent);
-              dialogRef.componentInstance.title = 'Questionnaire Already Submitted';
-              dialogRef.componentInstance.message = 'Please check the ID and try again or contact the issuer.';
-            }
-          } else {
-            this.router.navigateByUrl('/');
-            const dialogRef = this.errorDialog.open(ErrorDialogPopupComponent);
-            dialogRef.componentInstance.title = 'Invalid Questionnaire Id';
-            dialogRef.componentInstance.message = 'Please check the ID and try again or contact the issuer.';
-          }
-      }, (error: Error) => this.handleQuestionnaireError(error));
       });
     this.loadFoodItems();
   }
 
   submitQuestionnaire() {
+    this.submitting = true;
 
     let pageHasErrors = false;
+
+    if(!this.gender)
+    {
+      pageHasErrors = true;
+    }
+
     for (const foodItem of this.foodItems) {
       if (this.hideSecondaryItems && !foodItem.isPrimary) {
         foodItem.disabled = true;
@@ -102,6 +96,7 @@ export class QuestionnairePageComponent implements OnInit {
       const  dialogRef  = this.submissionErrorDialog.open(ErrorDialogPopupComponent);
       dialogRef.componentInstance.title = 'Questionnaire Incomplete';
       dialogRef.componentInstance.message = 'Please ensure all required fields are completed.';
+      this.submitting = false;
 
     } else {
 
@@ -115,7 +110,7 @@ export class QuestionnairePageComponent implements OnInit {
         }
       }
 
-      this.foodService.calculateNutrientBreakdown(this.userId, this.id, this.infantage, itemList)
+      this.foodService.calculateNutrientBreakdown(this.userId, this.id, this.infantage, this.gender, itemList)
         .subscribe( (results) => {
             console.log(results);
             const dailyMap: Map<string, number> = new Map();
@@ -139,11 +134,12 @@ export class QuestionnairePageComponent implements OnInit {
             console.log('OPENED MODAL');
             */
 
-            this.questService.submitQuestionnaire(this.questionnaire.id).subscribe((data: Questionnaire) => {
+            this.questService.submitQuestionnaire(this.id).subscribe((data: Questionnaire) => {
             this.router.navigateByUrl('/');
             const dialogRef = this.successDialog.open(ErrorDialogPopupComponent);
             dialogRef.componentInstance.title = 'Submitted Successfully';
             dialogRef.componentInstance.message = 'The questionnaire has been sent to the issuer.';
+            this.submitting = false;
             }, (error: HttpErrorResponse) => this.handleSubmissionError(error));
 
         }, (error: HttpErrorResponse) => this.handleSubmissionError(error));
@@ -155,15 +151,40 @@ export class QuestionnairePageComponent implements OnInit {
       this.hideSecondaryItems = !this.hideSecondaryItems;
   }
 
+  // private loadFoodItems() {
+  //   this.foodService.getFoodItems().subscribe(data => {
+  //     data.map(response => {
+  //       this.foodItems.push(FFQItem.foodItemFromResponse(response));
+  //     });
+  //     console.log(this.foodItems.length + ' food items returned from server.');
+  //     this.dataLoaded = Promise.resolve(true);
+  //   }, (error: HttpErrorResponse) => this.handleFoodServiceError(error));
+  // }
+
+
   private loadFoodItems() {
     this.foodService.getFoodItems().subscribe(data => {
       data.map(response => {
-        this.foodItems.push(FFQItem.foodItemFromResponse(response));
+        this.tmpfoodItems.push(FFQItem.foodItemFromResponse(response));
+        // console.log(FFQItem.foodItemFromResponse(response).name);
       });
+
+      this.foodItems = this.getFoodItemByPosition(this.tmpfoodItems);
+
+      console.log(this.tmpfoodItems.length + 'tmp food items returned from server.');
       console.log(this.foodItems.length + ' food items returned from server.');
+
       this.dataLoaded = Promise.resolve(true);
     }, (error: HttpErrorResponse) => this.handleFoodServiceError(error));
   }
+
+// returns a FFQ item with the itemPosition equal to the position param
+private getFoodItemByPosition (arr:FFQItem[] ): FFQItem[]{
+  var sortedArray = arr.sort(function(a,b){
+    return a.itemPosition >b.itemPosition?1:a.itemPosition <b.itemPosition?-1:0
+   })
+   return sortedArray;
+}
 
   private handleFoodServiceError(error: HttpErrorResponse) {
     console.error('Error occurred.\n' + error.message);
@@ -190,6 +211,7 @@ export class QuestionnairePageComponent implements OnInit {
     const dialogRef = this.errorDialog.open(ErrorDialogPopupComponent);
     dialogRef.componentInstance.title = 'Error Submitting Questionnaire';
     dialogRef.componentInstance.message = error.message + '. Try again or contact administrator.';
+    this.submitting = false;
   }
 
 }
