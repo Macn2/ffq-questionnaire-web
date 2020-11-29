@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FoodItemService } from '../../services/food-item/food-item.service';
 import { FFQItem } from 'src/app/models/ffqitem';
@@ -77,7 +77,7 @@ export class AdminPageComponent implements OnInit {
   onModalRequest(id: string): void {
     const modalRef = this.modalService.open(PopupComponent);
     modalRef.componentInstance.id = id;
-    
+
   }
 
 

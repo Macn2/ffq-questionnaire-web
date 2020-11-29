@@ -1,0 +1,63 @@
+<admin-header></admin-header>
+
+<div class="container_page">
+    <div class="container mt-3" align="center">
+      <div class="row">
+        <button routerLink='/admin/research/institution/' type="submit" mat-raised-button>New Research Institution...</button>
+        <span style="margin: 10px"></span>
+        <button routerLink='/admin/researcher' type="submit" mat-raised-button>New Researcher User(s)...</button>
+      </div>
+    </div>
+
+    <div class="container mt-3">
+      <span> {{ researchInstitutionList.length }} research institution(s) </span>
+      <table class="table table-bordered table-inverse">
+        <tr>
+          <th width="20"> Research Institution Id</th>    
+         
+          <th width="20"> Research Institution Name</th>   
+           <th width="34%"> Location </th>
+        
+        </tr>
+        <tr *ngFor="let c of researchInstitutionList; index as i">
+          <td> {{ c.researchInstitutionId }} </td>
+          <td> <a [routerLink]="['/admin/clinic/', c.clinicId]">{{ c.institutionName }}</a></td>
+          <td> {{ c.address }} </td>
+          
+        </tr>
+      </table>
+
+      <br>
+        <span>{{ researcherList.length }} researcher user(s)</span>
+        <div>
+            <input style="width: 25%; display: inline-block;  margin-left: 5px;" placeholder="Search..." type="text" class="form-control"
+                name="search" [(ngModel)]="search"/>
+            <span style="color:gray; margin-left: 20px; margin-right: 20px; font-size: x-large;"> | </span>
+              <mat-form-field>
+                <mat-label appearance="fill">Filter by Research Institution...</mat-label>
+                <mat-select matNativeControl multiple>
+                  <mat-option *ngFor="let c of researchInstitutionList" [value]="c.institutionName" (click)="filterByResearchInstitution(c.institutionName)">{{ c.institutionName }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <table class="table table-bordered table-inverse">
+            <tr>
+                <th width="25%"> Username </th>
+                <th width="15%"> First Name </th>
+                <th width="15%"> Last Name </th>
+                <th width="20%"> Research Institution </th>
+                <th width="60%"> Limit Number of Participants </th>
+
+            </tr>
+            <tr *ngFor="let u of researcherList | searchFilter: search; index as i" [hidden]="!showResearchers || (filtered && filtered_researchInst.indexOf(ResearchInstNames[u.AssignedResearchInstitutionId -1]) === -1)">
+                <td><a [routerLink]="['/admin/user/p', u.userId]"> {{ u.username }} </a></td>
+                <td> {{ u.firstname}} </td>
+                <td> {{ u.lastname }} </td>
+                <td> {{ ResearchInstNames[u.AssignedResearchInstitutionId -1] }} </td>
+                <td> {{ u.limitNumberOfParticipants }} </td>
+            </tr>
+        </table>
+
+    </div>
+</div>

@@ -1,141 +1,212 @@
 <admin-header></admin-header>
-
 <form #myForm="ngForm">
   <div class="form-group">
-    <div class="container_page" *ngIf="dataLoaded">
-      <div class="container" style="margin-top: 15px;"><a routerLink="/admin/users"><span
-            class="fa fa-chevron-circle-left"></span> Back to Users </a></div>
-
-      <!-- Update user starts here -->    
+    <div class="container_page">
+      <div class="container" style="margin-top: 15px;"><a routerLink="/admin/users">
+        <span class="fa fa-chevron-circle-left"></span> Back to Users </a>
+      </div>
 
       <div *ngIf="isUpdate" class="container mt-3">
-        <div align="right">
-          <button mat-raised-button class="delete" style="margin-right: 20px;" (click)="deleteUser()"> Delete </button>
-          <button mat-raised-button class="update" (click)="updateUser()"
-            [disabled]="!myForm.form.valid"> Update User </button>
-        </div>
+
         <div class="container frame-fooditem">
-          <h6> Update User </h6>
+          <br>
+          <h6 style="text-align:center"> <label style="font-weight: bold"> Update User </label> </h6>
           <div class="form-group col-12">
             <label style="font-weight: bold"> Account Type </label>
-            <br>  
+            <br>
             <mat-radio-group aria-label="Select an option">
-              <mat-radio-button value="parent" [checked]="isParent" color="primary" [disabled]="true">Parent</mat-radio-button>
+              <mat-radio-button value="parent" [checked]="isParent" color="primary" disabled="true">Parent</mat-radio-button>
               <br>
-              <mat-radio-button value="clinician" [checked]="isClinician" color="primary" [disabled]="true">Clinician</mat-radio-button>
+              <mat-radio-button value="clinician" [checked]="isClinician" color="primary" disabled="true">Clinician</mat-radio-button>
             </mat-radio-group>
 
             <br>
             <label style="font-weight: bold"> Username </label>
 
             <div *ngIf="isParent">
-            <input style="border-color: gray; border-width: 0.05cm" type="text"
-                class="form-control" readonly name="username" [(ngModel)]="userAttributes.username">
-            <br>
-            <label style="font-weight: bold">Choose Clinic to assign to:</label>
+              <input style="border-color: gray; border-width: 0.05cm" type="text"
+                     class="form-control" readonly name="username" [(ngModel)]="userAttributes.username">
+              <br>
+              <label style="font-weight: bold"> Password Reset </label>
+              <div style="display: flex; align-items: stretch; justify-content: space-between">
+                <input style="border-color: gray; border-width: 0.05cm; width:68%" type="text"
+                       class="form-control" name="newPassword" [(ngModel)]="userAttributes.userpassword">
+                <button mat-raised-button style="width:30%" class="update" (click)="generatePassword()">
+                  Generate new password
+                </button>
+              </div>
+              <label style="font-weight: bold">Choose Clinic to assign to:</label>
               <br>
               <mat-form-field>
                 <mat-label appearance="fill">Choose Clinic...</mat-label>
-                <mat-select matNativeControl name="assignedclinic" [(ngModel)]="userAttributes.assignedclinic" required> 
-           <!--     <mat-select matNativeControl [(value)]="userAttributes[0].assignedclinic" required> -->
-                  <mat-option *ngFor="let c of ffqclinicList" [value]="c.clinicId">{{ c.clinicname }}</mat-option>
+                <mat-select matNativeControl name="assignedclinic" [(ngModel)]="userAttributes.assignedclinic" required>
+                  <!--     <mat-select matNativeControl [(value)]="userAttributes[0].assignedclinic" required> -->
+                  <mat-option *ngFor="let c of ffqclinicList" [value]="c.clinicId">
+                    {{ c.clinicname }}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
 
             </div>
 
             <div *ngIf="isClinician">
-            <input style="border-color: gray; border-width: 0.05cm" type="text"
-                class="form-control" readonly name="username" [(ngModel)]="userAttributes.username">
+              <input style="border-color: gray; border-width: 0.05cm" type="text"
+                     class="form-control" readonly name="username" [(ngModel)]="userAttributes.username">
+              <br>
+              <label style="font-weight: bold"> Password Reset </label>
+              <div style="display: flex; align-items: stretch; justify-content: space-between">
+                <input style="border-color: gray; border-width: 0.05cm; width:68%" type="password"
+                       class="form-control" name="newPassword" [(ngModel)]="userAttributes.userpassword">
+                <button mat-raised-button style="width:30%" class="update" (click)="generatePassword()">
+                  Generate new password
+                </button>
+              </div>
+
+              <hr>
+              <form class="example-form">
+                <label style="font-weight: bold">Set Parent Limit For Clinician:</label>
                 <br>
-            <label style="font-weight: bold">Choose Clinic to assign to:</label>
+                <mat-form-field class="example-full-width">
+                  <mat-label>Parent limit</mat-label>
+                  <input required matInput [(ngModel)]="userAttributes.parentLimitForClinician" type="number" id="parentLimit" name="parentLimit" min="1" value="1" placeholder="Enter parent limit...">
+<!--                  <mat-hint align="start"><strong>* required</strong> </mat-hint>-->
+                </mat-form-field>
+              </form>
+              <hr>
+              <form class="example-form">
+                <label style="font-weight: bold">Set Prefix For Clinician:</label>
+                <br>
+                <mat-form-field class="example-full-width">
+                  <mat-label>Prefix</mat-label>
+                  <input required matInput [(ngModel)]="userAttributes.prefix" id="prefix" name="prefix" #message maxlength="8" placeholder="Enter Prefix...">
+                  <mat-hint align="start"><strong>If no prefix entered, will use Parent as prefix</strong> </mat-hint>
+                  <mat-hint align="end">{{message.value.length}} / 8</mat-hint>
+                </mat-form-field>
+              </form>
+              <br>
+              <label style="font-weight: bold">Choose Clinic to assign to:</label>
               <br>
               <mat-form-field>
                 <mat-label appearance="fill">Choose Clinic...</mat-label>
-                <mat-select matNativeControl name="assignedclinic" [(ngModel)]="userAttributes.assignedclinic" required> 
-           <!--     <mat-select matNativeControl [(value)]="userAttributes[0].assignedclinic" required> -->
-                  <mat-option *ngFor="let c of ffqclinicList" [value]="c.clinicId">{{ c.clinicname }}</mat-option>
+                <mat-select matNativeControl name="assignedclinic" [(ngModel)]="userAttributes.assignedclinic" required>
+<!--                       <mat-select matNativeControl [(value)]="userAttributes[0].assignedclinic" required>-->
+                  <mat-option *ngFor="let c of ffqclinicList" [value]="c.clinicId">
+                    {{ c.clinicname }}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
+
             </div>
-
           </div>
+          <div align="middle">
+            <button mat-raised-button class="delete" style="margin-right: 20px;" (click)="deleteUser()">
+              Delete
+            </button>
+            <button mat-raised-button class="update" (click)="updateUser()" [disabled]="!myForm.form.valid">
+              Update User
+            </button>
+          </div>
+          <br>
         </div>
-
       </div>
 
-      <!-- Update user ends here -->
-
-      <!-- Add user starts here -->
+              <!--Add user starts here-->
 
       <div *ngIf="isNew" class="container mt-3">
-        <div align="right">
-          <button type="submit" class="btn btn-primary col-3 margin" (click)="addUser()"
-            [disabled]="!myForm.form.valid"> Add User(s) </button>
-        </div>
 
-        <div class="container frame-fooditem">
-          <h6> New User(s) </h6>
-  
-          <div class="form-group col-12">
-            <label style="font-weight: bold"> Account Type </label>
-            <br>  
-            <mat-radio-group aria-label="Select an option">
-              <mat-radio-button value="parent" (change)="changeToParent($event)" color="primary">Parent</mat-radio-button>
-              <br>
-              <mat-radio-button value="clinician" (change)="changeToClinician($event)" color="primary">Clinician</mat-radio-button>
-            </mat-radio-group>
-          </div>
-
-          <!-- Create Parent starts here -->
-
-          <div class="optional_container" *ngIf="createParents">
+        <div class="container mt-3">
+          <div class="container frame-fooditem">
+            <br>
+            <h6 style="text-align:center"> <label style="font-weight: bold"> Add New User(s) </label> </h6>
             <div class="form-group col-12">
-              <!--<label style="font-weight: bold"> Amount </label><label style="font-style: italic; font-size: small; margin-left: 10px"> *required </label>
-              <input placeholder="Amount of Parents (1 - 100)" width="25" style="border-color: mediumblue; border-width: 0.05cm" type="text"
-                class="form-control" name="amountToAdd" [(ngModel)]="amountToAdd" required #nameField="ngModel" />-->
-              <hr>
-              <label style="font-weight: bold">Choose Clinic to assign to:</label><label style="font-style: italic; font-size: small; margin-left: 10px"> *required </label>
+              <label style="font-weight: bold"> Account Type </label>
+              <br>
+              <mat-radio-group aria-label="Select an option" [(ngModel)]="userType" name="userType">
+                <mat-radio-button [value]="userTypes.Clinician" color="primary">Clinician</mat-radio-button>
                 <br>
-              <mat-form-field>
-                <mat-label appearance="fill">Choose Clinic...</mat-label>
-                <mat-select matNativeControl required name="assignedclinic" [(ngModel)]="selectedClinic">
-                  <mat-option *ngFor="let c of ffqclinicList" [value]="c.clinicId" >{{ c.clinicname }}</mat-option>
-                </mat-select>
-              </mat-form-field>
-  
+                <mat-radio-button [value]="userTypes.Parent"  color="primary">Parent</mat-radio-button>
+              </mat-radio-group>
+            </div>
+
+            <div class="optional_container" *ngIf="userType">
+              <div class="form-group col-12">
+                <hr>
+                <label style="font-weight: bold">Choose Clinic to assign to:</label>
+                <label style="font-style: italic; font-size: small;"> *required </label>
+                <br>
+                <mat-form-field>
+                  <mat-label appearance="fill">Choose Clinic...</mat-label>
+                  <mat-select matNativeControl required name="assignedclinic" [(ngModel)]="selectedClinic" (selectionChange)="selectChangeHandler($event)">
+                    <mat-option *ngFor="let c of (ffqclinicList$| async)" [value]="c.clinicId">
+                      {{ c.clinicname }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <table class="table table-bordered table-inverse">
+                  <tr>
+                    <th width="16.66%"> No. of Clinicians </th>
+                    <th width="16.66%"> No. of Parents </th>
+                  </tr>
+                  <tr >
+                    <td>{{ numClinician }}</td>
+                    <td>{{ numParents }}</td>
+                  </tr>
+                </table>
+                <mat-form-field *ngIf="userType == userTypes.Parent">
+                  <mat-label appearance="fill">Choose Clinician...</mat-label>
+                  <mat-select matNativeControl name="assignedclinician" [(ngModel)]="selectedClinician" required>
+                    <!--                    <mat-option *ngFor="let u of ffqclinicianList" [hidden]=" u.assignedclinic != clinicId" [value]="u.userId">{{ "clinician" + u.userId }}</mat-option>-->
+                    <mat-option *ngFor="let c of (ffqclinicianList$| async)" [hidden]=" c.assignedclinic != clinicId" [value]="c.userId">{{ "clinician" + c.userId }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <hr>
+                <form class="example-form">
+                  <label style="font-weight: bold">Select Quantity:</label>
+                  <br>
+                  <mat-form-field class="example-full-width">
+                    <mat-label>Parent limit</mat-label>
+                    <input required matInput [(ngModel)]="usersQuantity" type="number" id="parent_quantity" name="quantity" min="1" value="1" placeholder="Select quantity...">
+                    <mat-hint align="start"><strong>* required</strong> </mat-hint>
+                  </mat-form-field>
+                </form>
+                <br>
+                <div *ngIf="userType == userTypes.Clinician" >
+                  <hr>
+                  <form class="example-form">
+                    <label style="font-weight: bold">Set Parent Limit For Clinician:</label>
+                    <br>
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Parent limit</mat-label>
+                      <input required matInput [(ngModel)]="parentLimitForClinician" type="number" id="parentLimit" name="parentLimit" min="1" value="1" placeholder="Enter parent limit...">
+                      <mat-hint align="start"><strong>* required</strong> </mat-hint>
+                    </mat-form-field>
+                  </form>
+                  <br>
+                  <hr>
+                  <form class="example-form">
+                    <label style="font-weight: bold">Set Prefix For Clinician:</label>
+                    <br>
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Prefix</mat-label>
+                      <input matInput required [(ngModel)]="prefix" id="prefix" name="prefix"  placeholder="Enter Prefix...">
+<!--                      <mat-hint align="start"><strong>If no prefix entered, will use Parent as prefix</strong> </mat-hint>-->
+                    </mat-form-field>
+                  </form>
+                  <br>
+                </div>
+
+                <div align="middle">
+                  <button type="submit" mat-raised-button (click)="addUser()"
+                          [disabled]="!myForm.form.valid"> Add User(s)
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-
-          <!-- Create Parent ends here -->
-
-          <!-- Create Clinician starts here -->
-  
-          <div class="optional_container" *ngIf="createClinician">
-            <div class="form-group col-12">
-              <hr>
-              <label style="font-weight: bold">Choose Clinic to assign to:</label><label style="font-style: italic; font-size: small; margin-left: 10px"> *required </label>
-              <br>
-              <mat-form-field>
-                <mat-label appearance="fill">Choose Clinic...</mat-label>
-                <mat-select matNativeControl required name="assignedclinic" [(ngModel)]="selectedClinic">
-                  <mat-option *ngFor="let c of ffqclinicList" [value]="c.clinicId">{{ c.clinicname }}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          
-          </div>
-
-          <!-- Create Clinician ends here -->
-
-      </div>
-
-      <!-- Add user ends here -->
-      
-      
-
-        
+        </div>
       </div>
     </div>
   </div>
 </form>
+

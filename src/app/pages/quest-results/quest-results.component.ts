@@ -6,6 +6,19 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map, tap} from 'rxjs/operators';
 import { NutrientConstants } from 'src/app/models/NutrientConstants';
+// import { RecommendComponent } from '../recommend/recommend.component'
+
+///////////added imports from recommend.component.ts/////////////////////
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RecommendModalComponent } from 'src/app/components/recommend-modal/recommend-modal.component';
+import { MatDialog } from '@angular/material/dialog';
+import { NutrientsRecommendationsService } from 'src/app/services/nutrients-recommendations/nutrients-recommendations.service';
+import { FFQNutrientsRecommendations } from 'src/app/models/ffqnutrients-recommendations';
+import { ErrorDialogPopupComponent } from 'src/app/components/error-dialog-popup/error-dialog-popup.component';
+import { Router } from '@angular/router';
+import { FoodRecommendModalComponent } from 'src/app/components/food-recommend-modal/food-recommend-modal.component';
+import { FoodRecommendationsService } from 'src/app/services/food-recommendation-service/food-recommendations.service';
+import { FoodDescriptionService } from 'src/app/services/food-description/food-description.service';
 
 // Questionnaire reesults page added by Daykel Muro 09/30/2019
 @Component({
@@ -15,10 +28,17 @@ import { NutrientConstants } from 'src/app/models/NutrientConstants';
 })
 export class QuestResultsComponent implements OnInit {
   public show: boolean = false;
+  public showFeedback: boolean = false;
 
   results: FFQResultsResponse[] = [];
 
-  constructor(public resultsService: ResultsService) {}
+  constructor(public resultsService: ResultsService,////////////////////////////////////////
+              public nutrientsRecommendationsService: NutrientsRecommendationsService,
+              public foodRecommendationsService: FoodRecommendationsService,
+              public foodDescriptionService: FoodDescriptionService,
+              private modalService: NgbModal,
+              private errorDialog: MatDialog,
+              private router: Router) {}
 
   ngOnInit() {
     this.getAllResults();
@@ -47,7 +67,6 @@ export class QuestResultsComponent implements OnInit {
        element.dailyAverages = newDailyMap;
        })
 
-       console.log(m);
        this.results = m.reverse();
     }
 
@@ -62,5 +81,46 @@ export class QuestResultsComponent implements OnInit {
   toggle(index) {
     this.results[index].show = !this.results[index].show;
   }
+  /////////////////////////////////////////////////////////////////////////////////
+  // (Francis) attempting to add Nutrients and Food Items buttons from recommend tab
+  //            copy/pasted from recommend.component.ts
+  /////////////////////////////////////////////////////////////////////////////////
+
+  private getNutrientsRecommendations(questionnaireId: string) {
+    this.nutrientsRecommendationsService.getNutrientsRecommendationsByQuestionnaireId(questionnaireId).subscribe(
+      data => {
+        this.onModalRequest(questionnaireId);
+      },
+      error => {
+        const dialogRef = this.errorDialog.open(ErrorDialogPopupComponent);
+        dialogRef.componentInstance.title = error.error.message;
+        dialogRef.componentInstance.router = this.router;
+      }
+    );
+  }
+
+  private getFoodRecommendations(questionnaireId: string) {
+    this.foodRecommendationsService.getFoodRecommendationsByQuestionnaireId(questionnaireId).subscribe(
+      data => {
+        this.onModalRequestFood(questionnaireId);
+      },
+      error => {
+        const dialogRef = this.errorDialog.open(ErrorDialogPopupComponent);
+        dialogRef.componentInstance.title = error.error.message;
+        dialogRef.componentInstance.router = this.router;
+      }
+    );
+  }
+
+  onModalRequest(id: string): void {
+    const modalRef = this.errorDialog.open(RecommendModalComponent);
+    modalRef.componentInstance.id = id;
+  }
+
+  onModalRequestFood(id: string): void {
+    const modalRef = this.errorDialog.open(FoodRecommendModalComponent);
+    modalRef.componentInstance.id = id;
+  }
+
 
 }

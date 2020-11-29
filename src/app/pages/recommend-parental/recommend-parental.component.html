@@ -2,7 +2,8 @@
 
 <div class="rec-container">
   <mat-card>
-    <mat-radio-group aria-label="Select an option" value="1">
+    <mat-radio-group aria-label="Select an option">
+      <label style="text-align: left;"><strong>Select infant age range:</strong></label>
       <mat-radio-button (click)="showFirst()" value="1">0-5.9 Months</mat-radio-button>
       <mat-radio-button (click)="showSecond()" value="2">6-11.9 Months</mat-radio-button>
       <mat-radio-button (click)="showThird()" value="3">12-24 Months</mat-radio-button>
@@ -14,9 +15,10 @@
       <img class="image" src="{{result.imageUrl}}">
       <div>
         <label><strong>{{result.foodItemGroupName}}</strong></label><br>
-        <label><strong *ngIf="showBracketFirst">{{ result.firstBracketIntake }}</strong></label>
-        <label><strong *ngIf="showBracketSecond">{{ result.secondBracketIntake }}</strong></label>
-        <label><strong *ngIf="showBracketThird">{{ result.thirdBracketIntake }}</strong></label>
+        <label><strong *ngIf="showBracketFirst">{{ result.firstBracketIntake }} {{ ageMessage }}</strong></label>
+        <label><strong *ngIf="showBracketSecond">{{ result.secondBracketIntake }} {{ ageMessage }}</strong></label>
+        <label><strong *ngIf="showBracketThird">{{ result.thirdBracketIntake }} {{ ageMessage }}</strong></label>
+        <label><strong *ngIf="showNone">{{ ageMessage }}</strong></label>
         <br>
         <label>
           {{result.description}}

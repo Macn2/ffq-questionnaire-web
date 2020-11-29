@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { formatDate } from '@angular/common';
 import { ErrorDialogPopupComponent } from 'src/app/components/error-dialog-popup/error-dialog-popup.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { TrackerResultsResponse } from 'src/app/models/trackerresultsresponse';
 import { TrackerItems } from 'src/app/models/trackeritems';
 import { TrackerResponseService } from 'src/app/services/tracker-response/tracker-response.service';
@@ -25,9 +25,9 @@ export class TrackerPageComponent implements OnInit {
   INSTRUCTIONS_TITLE = 'Instructions: \n';
   BULLETED_INSTRUCTIONS = [
     'For each food item select the appropriate answer',
-    'If your child consumed the designated amount press the checkbox',
-    'If your child consumed more than the designated amount press the up arrow',
-    'If your child consumed less than the designated amount press the down arrow',
+    'If your baby consumed more than the recommended amount select the up arrow',
+    'If your baby consumed the recommended amount select the check mark',
+    'If your baby consumed less than the recommended amount select the down arrow',
     'Click the submit button when finished.'
   ];
 
@@ -127,7 +127,7 @@ export class TrackerPageComponent implements OnInit {
       this.showItems = true;
       this.age = age;
 
-      if(age <= 12) {
+      if(age < 6) {
         this.showBracketFirst = true;
         this.showBracketSecond = false;
         this.showBracketThird = false;

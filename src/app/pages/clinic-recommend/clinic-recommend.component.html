@@ -1,38 +1,30 @@
 <clinical-header></clinical-header>
-<div class="container_page">
-    <div class="container mt-3" *ngIf="resultInfo.length != 0">
-        <label style="font-weight:bold"> Recommendations </label>
-        <input style="width: 25%" placeholder="Search..." type="text" class="form-control"
-          name="search" [(ngModel)]="search"/>
-        <div class="container mt-3">
-         <span></span>
-         <table class="table table-bordered table-inverse">
-              <tr>
-                <th width="20%"><div align="center"> Parent Name </div></th>
-                <th width="15%"><div align="center"> Questionnaire ID </div></th>
-                <th width="20%"><div align="center"> Infant Name </div></th>
-                <th width="15%"><div align="center"> Infant Age (mths) </div></th>
-                <th width="15%"><div align="center"> Nutrients </div></th>
-                <th width="15%"><div align="center"> Food Items </div></th>
-            </tr>
-            <tr *ngFor="let result of resultInfo| recommendedFilter: resultMap: search ; let i = index">
-                <td>
-                    <div align="center">{{ result.parentName }}</div>
-                </td>
-                <td>
-                    <div align="center">{{ result.ffqresult.questionnaireId }}</div>
-                </td>
-                <td>
-                    <div align="center">{{ result.ffqresult.patientName }}</div>
-                </td>
-                <td>
-                    <div align="center">{{ result.ffqresult.ageInMonths }}</div>
-                </td>
-                <td><div align="center"><a (click)="getNutrientsRecommendations(result.ffqresult.questionnaireId)"><i title="nutrients" class="fa fa-flask"></i></a></div></td>
-                <td><div align="center"><a (click)="getFoodRecommendations(result.ffqresult.questionnaireId)"><i title="fooditems" class="fa fa-cutlery"></i></a></div></td>
-            </tr>
-         </table>
+
+<div class="rec-container">
+    <mat-card>
+        <mat-radio-group aria-label="Select an option">
+            <label style="text-align: left;"><strong>Select infant age range:</strong></label>
+            <mat-radio-button (click)="showFirst()" value="1">0-5.9 Months</mat-radio-button>
+            <mat-radio-button (click)="showSecond()" value="2">6-11.9 Months</mat-radio-button>
+            <mat-radio-button (click)="showThird()" value="3">12-24 Months</mat-radio-button>
+        </mat-radio-group>
+    </mat-card>
+
+    <mat-card *ngFor="let result of results; let i = index">
+        <div class="item-container">
+            <img class="image" src="{{result.imageUrl}}">
+            <div>
+                <label><strong>{{result.foodItemGroupName}}</strong></label><br>
+                <label><strong *ngIf="showBracketFirst">{{ result.firstBracketIntake }} {{ ageMessage }}</strong></label>
+                <label><strong *ngIf="showBracketSecond">{{ result.secondBracketIntake }} {{ ageMessage }}</strong></label>
+                <label><strong *ngIf="showBracketThird">{{ result.thirdBracketIntake }} {{ ageMessage }}</strong></label>
+                <label><strong *ngIf="showNone">{{ ageMessage }}</strong></label>
+                <br>
+                <label>
+            {{result.description}}
+          </label>
+            </div>
         </div>
-    </div>
+    </mat-card>
 
 </div>
