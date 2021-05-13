@@ -2,29 +2,29 @@ h2 {
   text-align: center;
   color: white;
 }
-  
+
 a {
   text-decoration: none;
 }
-  
+
 .header{
   background-color: #B64D3E;
   width: 100%;
   height: auto;
   position: fixed;
-  z-index: 9999;
+  z-index: 999;
 }
-  
+
 .links{
   padding-top: 22px;
 }
-  
+
 body, html {
   height: 100%;
   margin: 0;
   font-family: Arial;
 }
-  
+
   /* Style tab links */
 .tab-link {
   margin-top: 10px;
@@ -39,7 +39,7 @@ body, html {
   width: 25%;
   text-align:center;
 }
-  
+
 .active{
   background-color: #7E1608;
   color: white;
@@ -49,7 +49,7 @@ body, html {
   color: #6A1105;
   font-weight: bold;
 }
-  
+
   /* Style the tab content (and add height:100% for full page content) */
 .tabcontent {
   color: white;
@@ -57,14 +57,14 @@ body, html {
   padding: 100px 20px;
   height: 100%;
  }
-  
+
  .login-button {
   position: absolute;
   right: 10px;
   top: 10px;
   padding: 20px 10px;
 
-  
+
 }
 
 ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-accent .mat-pseudo-checkbox-checked, .mat-accent .mat-pseudo-checkbox-indeterminate, .mat-pseudo-checkbox-checked, .mat-pseudo-checkbox-indeterminate{

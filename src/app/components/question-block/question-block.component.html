@@ -1,47 +1,49 @@
 <div class="qb-container">
-  <mat-card  class="qb-card">
+  <mat-card class="qb-card">
     <!--Section for deactivating/reactivating a question block-->
-    <div style="float: right">      
+    <div style="float: right">
+
       <button class="block-activator" [hidden]="foodItem.disabled" (click)="toggleDisable()">
+        <p style="font-size:10">Not applicable..</p>
         <mat-icon color="primary">cancel</mat-icon>
       </button>
       <button class="block-activator" [hidden]="!foodItem.disabled" (click)="toggleDisable()">
         <mat-icon color="accent">refresh</mat-icon>
         <mat-label style="text-align: center" class="qb-row-item">{{foodItem.name}}</mat-label>
-      </button>      
+      </button>
     </div>
     <!--Required row, Item name, frequency input, and frequency type (Weekly or Daily)-->
     <tr [hidden]="foodItem.disabled">
-      <label><strong>{{foodItem.name}}</strong></label>     
+      <label><strong>{{foodItem.name}}</strong></label>
       <br>
       <mat-form-field>
         <input matInput
                [(ngModel)]="foodItem.input.frequency"
                class="qb-row-item"
                type="number" min="1"
-               placeholder="Frequency" autocomplete="off" required>
-      </mat-form-field>      
+               placeholder="Number of.." autocomplete="off" required>
+      </mat-form-field>
       <mat-label>time(s) per</mat-label>
       <mat-form-field style="padding-left: 10px">
-        <mat-select placeholder="Frequency type" [(ngModel)]="foodItem.input.frequencyType" required>
+        <mat-select placeholder="week or day..." [(ngModel)]="foodItem.input.frequencyType" required>
           <mat-option *ngFor="let type of FREQUENCY_TYPES" [value]="type">
             {{ type }}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-error *ngIf="foodItem.isSubmitted && foodItem.getErrorState().includes('frequency')">
-        Frequency count and type is required.
+      <mat-error *ngIf="(foodItem.isSubmitted || foodItem.isSubmitted === null) && foodItem.getErrorState().includes('frequency')">
+        Please enter the number servings per week or per day.
       </mat-error>
       <mat-error *ngIf="foodItem.isSubmitted
         && foodItem.getErrorState().includes('frequency-range')
         && !foodItem.getErrorState().includes('frequency')">
-        Frequency count must be a positive number.
+        Opps!..number of times must be greated than zero.
       </mat-error>
     </tr>
     <!--Servings option row, contingent on there being more than 1 option-->
     <tr [hidden]="foodItem.disabled" *ngIf="foodItem.servingOptions.length > 1">
       <mat-form-field class="qb-row-item">
-        <mat-select id="serving" placeholder="Servings"  [(ngModel)]="foodItem.input.serving" required>
+        <mat-select id="serving" placeholder="Size of each serving" [(ngModel)]="foodItem.input.serving" required>
           <mat-option *ngFor="let option of foodItem.servingOptions" [value]="option">
             {{ option }}
           </mat-option>
@@ -55,7 +57,7 @@
     <tr [hidden]="foodItem.disabled" *ngIf="foodItem.types.length > 1">
       <mat-radio-group id="type" class="qb-radio-group" [(ngModel)]="foodItem.input.type" required>
         <mat-radio-button class="qb-row-item padding" *ngFor="let type of foodItem.types" [value]="type">{{type}}</mat-radio-button>
-      </mat-radio-group>
+      </mat-radio-group>`
       <mat-error *ngIf="foodItem.isSubmitted && foodItem.getErrorState().includes('type')">
         Type selection is required.
       </mat-error>

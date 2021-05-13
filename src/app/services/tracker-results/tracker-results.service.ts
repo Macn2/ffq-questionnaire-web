@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TrackerResultsResponse } from 'src/app/models/trackerresultsresponse';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TrackerResultsService {
 
-  endpoint = 'http://localhost:9090/ffq';
+  endpoint = environment.foodServiceUrl + '/ffq';
 
   constructor(private http: HttpClient) { }
 

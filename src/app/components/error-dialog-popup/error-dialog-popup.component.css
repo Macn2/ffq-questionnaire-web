@@ -1,7 +1,7 @@
 .dialog-button {
-  width: 100px;
+  width: 300px;
 }
 .error-container {
   padding: 20px;
+  overflow-x: hidden;
 }
-

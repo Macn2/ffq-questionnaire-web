@@ -2,12 +2,12 @@ h2 {
     text-align: center;
     color: aliceblue;
   }
-  
+
   .container_page{
-    padding-top: 140px;
+    padding-top: 200px;
     margin-bottom: 50px;
   }
-  
+
   .header1{
     background-color: #3f51b5;
     width: 100%;
@@ -15,13 +15,17 @@ h2 {
     padding-top: 20px;
     position: fixed;
   }
-  
-  
-  a:hover {
+
+  .row{
+    display:inline-block;
+    /*padding-left: 10%;*/
+  }
+
+a:hover {
     color: blue;
     cursor: pointer;
   }
-  
+
   .mat-raised-button{
     background-color: #6573C3;
     color: white;

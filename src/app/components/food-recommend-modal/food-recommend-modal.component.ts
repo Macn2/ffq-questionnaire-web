@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { NutrientsRecommendationsService } from 'src/app/services/nutrients-recommendations/nutrients-recommendations.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorDialogPopupComponent } from '../error-dialog-popup/error-dialog-popup.component';
 import { FFQNutrientsRecommendations, Recommendation } from 'src/app/models/ffqnutrients-recommendations';
@@ -36,5 +36,16 @@ export class FoodRecommendModalComponent {
         this.recommendedFood.push(data);
       },
     );
+  }
+
+  color(label: string) {
+    let colorLabel;
+     switch (label.toLowerCase()) {
+      case 'below': colorLabel = 'yellow'; break;
+      case 'above': colorLabel = 'red'; break;
+      case 'little above': colorLabel = 'red'; break;
+      default: colorLabel = 'green'; break;
+    }
+    return colorLabel;
   }
 }

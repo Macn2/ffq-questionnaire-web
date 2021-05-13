@@ -5,14 +5,15 @@ export class FFQItemResponse {
   servingsList: Serving[];
   foodTypes: FoodType[];
   sugar: SugarSetting;
+  itemPosition: number;
 
-
-  constructor(name: string, primary: boolean, servingsList: Serving[], foodTypes: FoodType[], sugar: SugarSetting) {
+  constructor(name: string, primary: boolean, servingsList: Serving[], foodTypes: FoodType[], sugar: SugarSetting, itemPosition: number) {
     this.name = name;
     this.primary = primary;
     this.servingsList = servingsList;
     this.foodTypes = foodTypes;
     this.sugar = sugar;
+    this.itemPosition = itemPosition;
   }
 }
 

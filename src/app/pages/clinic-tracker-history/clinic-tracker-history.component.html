@@ -1,17 +1,21 @@
 <clinical-header></clinical-header>
 
-<div class="tracker-container">
+<div class="tracker-button-container">
+  <button [hidden]='resultInfo.length === 0' type="button" (click)="export()" class="btn btn-danger"> Export Data</button>
+</div>
 
+<div class="tracker-container">
+  <br><br><br>
   <div class="trackeritem-container" *ngIf="resultInfo.length === 0">
-    <label style="font-weight:bold"> Tracking History </label>
     <mat-card class="tracker-card">
       <h2 matDialogTitle>No responses have been submitted yet.</h2>
     </mat-card>
   </div>
   <div class="container mt-3" *ngIf="resultInfo.length != 0">
+
     <div style="margin-left: 250px; margin-bottom: 10px;">
       <label style="font-weight:bold"> Tracking History </label>
-      <input style="width: 25%" placeholder="Search..." type="text" class="form-control" name="search" [(ngModel)]="search"/>
+      <input style="width: 25%" placeholder="Search by userName..." type="text" class="form-control" name="search" [(ngModel)]="search"/>
     </div>
       <div *ngFor="let result of resultInfo | trackerFilter: resultMap: search ; let i = index" class="trackeritem-container">
         <mat-card class="tracker-card">

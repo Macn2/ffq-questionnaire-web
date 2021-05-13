@@ -2,6 +2,18 @@
 
 <div class="tracker-container">
 
+  <div class="trackeritem-container">
+    <mat-card class="tracker-card">
+      <h2 matDialogTitle>Goal Setting</h2>
+      <ul>
+        <li>If your baby consumed above or below the recommended amount, pick 1 food group to improve this week.</li>
+        <li>After age 6 months, your baby should eat a variety of healthy foods because good eating habits start early.</li>
+        <li>If your baby does not like a food, try again another day. It can take up to 15 times before they accept a new food.</li>
+        <li>Review the food groups in the "Recommendations" tab to help you plan your baby's menu for this week.</li>
+      </ul>
+    </mat-card>
+  </div>
+
   <div class="trackeritem-container" *ngIf="results.length === 0">
     <mat-card class="tracker-card">
       <h2 matDialogTitle>No responses have been submitted yet.</h2>

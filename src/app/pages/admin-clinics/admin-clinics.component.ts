@@ -9,6 +9,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FFQClinic } from 'src/app/models/ffqclinic';
 import { FFQParent } from 'src/app/models/ffqparent';
+import { FFQResearcherParent } from 'src/app/models/ffqresearcherparent';
 import { FFQClinician } from 'src/app/models/ffqclinician';
 import { Observable } from 'rxjs';
 import { FFQClinicResponse } from 'src/app/models/ffqclinic-response';
@@ -16,6 +17,7 @@ import { FFQClinicianResponse } from 'src/app/models/ffqclinician-response';
 import { FFQParentResponse } from 'src/app/models/ffqparent-response';
 import { ClinicService } from 'src/app/services/clinic/clinic-service';
 import { ParentService } from 'src/app/services/parent/parent-service';
+import { ResearcherParentService } from 'src/app/services/researcher-parent/researcher-parent-service';
 import { ClinicianService } from 'src/app/services/clinician/clinician-service';
 import { ClinicianPipe } from 'src/app/pipes/clinicianFilter.pipe';
 import { ParentPipe } from 'src/app/pipes/parentFilter.pipe';
@@ -31,7 +33,8 @@ export class AdminClinicsComponent implements OnInit {
 
     public clinicService: ClinicService,
     public clinicianService: ClinicianService,
-    public parentService: ParentService
+    public parentService: ParentService,
+
   ){}
 
   public ffqclinicList: FFQClinic[] = [];
@@ -42,13 +45,12 @@ export class AdminClinicsComponent implements OnInit {
 
   /* Loads all the data necessary to fill out the table in the html component */
   ngOnInit() {
-    
+
     this.clinicianNames.push("");
 
-    var clinicList: Observable<FFQClinicResponse[]> = this.clinicService.getAllClinics();
+    const clinicList: Observable<FFQClinicResponse[]> = this.clinicService.getAllClinics();
     clinicList.subscribe(a => {
       this.ffqclinicList = a;
-      //console.log(a);
     });
 
     var clinicianList: Observable<FFQClinicianResponse[]> = this.clinicianService.getAllClinicians();
@@ -58,13 +60,11 @@ export class AdminClinicsComponent implements OnInit {
       {
         this.clinicianNames.push(a[i].abbreviation + " " + a[i].firstname + " " + a[i].lastname);
       }
-      //console.log(a);
     });
 
     var parentList: Observable<FFQParentResponse[]> = this.parentService.getAllParents();
     parentList.subscribe(a => {
       this.ffqparentList = a;
-      //console.log(a);
     });
 
   }

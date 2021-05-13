@@ -5,13 +5,14 @@ import {QuestionnaireResponse} from '../../models/questionnaire-response';
 import {map} from 'rxjs/operators';
 import {FFQItemResponse} from '../../models/ffqitem-response';
 import {Questionnaire} from '../../models/Questionnaire';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionnaireValidatorService {
 
-  endpoint = 'http://localhost:9080/ffq';
+  endpoint = environment.questionnaireServiceUrl + '/ffq';
 
   static validateQuestionnaireId(id: string): boolean {
     return id.toLowerCase() === 'valid-001';
@@ -32,9 +33,17 @@ export class QuestionnaireValidatorService {
   }
 
   submitQuestionnaire(id: string): Observable<any> {
+    return this.http.post(this.endpoint + '/create', {
+      questionnaireID: id,
+      issuerID: "any",
+      submitted: true
+    });
+  }
+
+  submitFeedback(id: string, feedback: string): Observable<any> {
     return this.http.put(this.endpoint + '/update', {
       questionnaireID: id,
-      submitted: true
+      feedback: feedback
     });
   }
 }

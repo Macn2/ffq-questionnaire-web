@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   /* padding-top: 10%; */
-  padding-top: 140px;
+  padding-top: 200px;
 }
 .quest-id-card {
   width: 60%;
@@ -16,7 +16,10 @@
   padding-right: 30px;
 }
 .quest-id-button {
-  padding-left: 30px;
+  padding-left: 85px;
+}
+.quest-id-reference {
+  padding-top: 20px;
 }
 .quest-id-span {
   display: inline-flex;

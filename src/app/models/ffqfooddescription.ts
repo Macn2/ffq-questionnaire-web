@@ -1,4 +1,5 @@
 export class Description {
+  _id: any;
   imageUrl: string;
   foodItemGroupName: string;
   firstBracketIntake: string;
@@ -6,8 +7,9 @@ export class Description {
   thirdBracketIntake: string;
   description: string;
 
-  constructor(imageUrl: string, foodItemGroupName: string, firstBracketIntake: string, secondBracketIntake: string,
+  constructor(_id: any, imageUrl: string, foodItemGroupName: string, firstBracketIntake: string, secondBracketIntake: string,
     thirdBracketIntake: string, description: string) {
+    this._id = _id;
     this.imageUrl = imageUrl;
     this.foodItemGroupName = foodItemGroupName;
     this.firstBracketIntake = firstBracketIntake;
