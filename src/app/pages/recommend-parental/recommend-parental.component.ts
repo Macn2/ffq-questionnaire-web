@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ResultsService } from "src/app/services/results/results";
-import { FFQResultsResponse } from "src/app/models/ffqresultsresponse";
+import { ResultsService } from 'src/app/services/results/results.service';
+import { FFQResultsResponse } from 'src/app/models/ffqresultsresponse';
 import {Observable} from 'rxjs';
 import { Description } from 'src/app/models/ffqfooddescription';
 import { FoodDescriptionService } from 'src/app/services/food-description/food-description.service';
+
 
 @Component({
   selector: 'app-recommend-parental',
@@ -12,40 +13,46 @@ import { FoodDescriptionService } from 'src/app/services/food-description/food-d
 })
 export class RecommendParentalComponent implements OnInit {
 
-  showBracketFirst = true;
+  showBracketFirst = false;
   showBracketSecond = false;
   showBracketThird = false;
+  showNone = true;
+
+  ageMessage = 'Please select infant age.';
+  ageRange1 =  'for child 0 to 5.9 months';
+  ageRange2 = 'for child 6 to 11.9 months';
+  ageRange3 = 'for child 12 to 24 months';
 
   results: Description[] = [];
-
   constructor(public foodDescriptionService: FoodDescriptionService) {}
-
   ngOnInit() {
     this.getAllResults();
   }
-
-  private getAllResults() {
+  public getAllResults() {
      const list: Observable<Description[]> = this.foodDescriptionService.getAllFoodItems();
      list.subscribe(m => {
        this.results = m;
      });
   }
-
-
   public showFirst() {
     this.showBracketFirst = true;
     this.showBracketSecond = false;
     this.showBracketThird = false;
+    this.ageMessage = this.ageRange1;
+    this.showNone = false;
   }
   public showSecond() {
     this.showBracketFirst = false;
     this.showBracketSecond = true;
     this.showBracketThird = false;
+    this.ageMessage = this.ageRange2;
+    this.showNone = false;
   }
   public showThird() {
     this.showBracketFirst = false;
     this.showBracketSecond = false;
     this.showBracketThird = true;
+    this.ageMessage = this.ageRange3;
+    this.showNone = false;
   }
-
 }
