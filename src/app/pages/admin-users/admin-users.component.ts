@@ -14,151 +14,167 @@ import { FFQAdmin } from 'src/app/models/ffqadmin';
 import { FFQClinicianResponse } from 'src/app/models/ffqclinician-response';
 import { ParentService } from 'src/app/services/parent/parent-service';
 import { ClinicianService } from 'src/app/services/clinician/clinician-service';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { FFQParentResponse } from 'src/app/models/ffqparent-response';
 import { FFQClinicResponse } from 'src/app/models/ffqclinic-response';
 import { FFQAdminResponse } from 'src/app/models/ffqadmin-response';
 import { ClinicService } from 'src/app/services/clinic/clinic-service';
 import { AdminService } from 'src/app/services/admin/admin-service';
+import { ResearchService } from 'src/app/services/research/research-service';
 import { FFQClinic } from 'src/app/models/ffqclinic';
-import { SearchPipe } from 'src/app/pipes/searchFilter.pipe';
-import { User } from 'src/app/models/user';
-import { HttpClient } from '@angular/common/http';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { FFQResearcher } from 'src/app/models/ffqresearcher';
+import {Usertype} from "../../models/usertype.enum";
 
 @Component({
   templateUrl: './admin-users.component.html',
-  styleUrls: ['./admin-users.component.css']
+  styleUrls: ['./admin-users.component.css'],
 })
-
 export class AdminUsersComponent implements OnInit {
-
   private showParents: boolean;
   private showClinicians: boolean;
   private showAdmins: boolean;
-
-  search: string;
-
+  private showResearch: boolean;
+  searchClinicians: string;
+  searchClinics: string;
+  parentClinicName: any;
   constructor(
     public parentService: ParentService,
     public clinicianService: ClinicianService,
     public clinicService: ClinicService,
     public adminService: AdminService,
+    public researchService: ResearchService,
     public authenticationService: AuthenticationService
-
-    ) { }
-
+  ) {}
 
   ffqclinicianList: FFQClinician[] = [];
   ffqparentList: FFQParent[] = [];
   ffqclinicList: FFQClinic[] = [];
   ffqadminList: FFQAdmin[] = [];
+  ffqresearchList: FFQResearcher[] = [];
   clinicianClinicNames: string[] = [];
   parentClinicNames: string[] = [];
   clinicNames: string[] = [];
   public filtered: boolean;
-  public filtered_clinics: String[] = [];
-  checked_users: string[] = [];
+  public filteredClinics: string[] = [];
+  public clinicianNames: string[] = [];
+  usertype = Usertype;
 
   ngOnInit() {
-    this.clinicNames.push("");
+    this.clinicNames.push('');
     this.showParents = true;
     this.showClinicians = true;
     this.showAdmins = true;
+    this.showResearch = true;
     this.filtered = false;
     this.loadAllUsers();
+    this.clinicianNames.push('');
+    const clinicList: Observable<FFQClinicResponse[]> = this.clinicService.getAllClinics();
+    clinicList.subscribe(a => {
+      this.ffqclinicList = a;
+    });
+
+    const clinicianList: Observable<FFQClinicianResponse[]> = this.clinicianService.getAllClinicians();
+    clinicianList.subscribe(a => {
+      this.ffqclinicianList = a;
+
+      a.forEach(item => {
+        this.clinicianNames.push(item.abbreviation + ' ' + item.firstname + ' ' + item.lastname);
+      });
+    });
   }
 
-  toggleParents()
-  {
+  toggleParents() {
     this.showParents = !this.showParents;
   }
 
-  toggleClinicians()
-  {
+  toggleClinicians() {
     this.showClinicians = !this.showClinicians;
   }
 
-  toggleAdmins()
-  {
+  toggleAdmins() {
     this.showAdmins = !this.showAdmins;
   }
 
-  filterByClinic(clinic_name: string)
-  {
-    const index = this.filtered_clinics.indexOf(clinic_name);
-    if(index === -1)
-    {
-      this.filtered_clinics.push(clinic_name);
+  toggleResearch() {
+    this.showResearch = !this.showResearch;
+  }
+
+
+  filterByClinic(clinicName: string) {
+    const index = this.filteredClinics.indexOf(clinicName);
+    if (index === -1) {
+      this.filteredClinics.push(clinicName);
+    } else {
+      this.filteredClinics.splice(index, 1);
     }
-    else
-    {
-      this.filtered_clinics.splice(index, 1);
-    }
-    if(this.filtered_clinics.length == 0)
-    {
-      this.filtered = false;
-    }
-    else
-    {
-      this.filtered = true;
-    }
+    this.filtered = this.filteredClinics.length !== 0;
   }
 
   /* Loads all users from the databases and pushes them into their respective lists to be displayed */
+
   private loadAllUsers() {
-    var clinicianList: Observable<FFQClinicianResponse[]> = this.clinicianService.getAllClinicians();
-    var parentList: Observable<FFQParentResponse[]> = this.parentService.getAllParents();
-    var clinicList: Observable<FFQClinicResponse[]> = this.clinicService.getAllClinics();
-    var adminList: Observable<FFQAdminResponse[]> = this.adminService.getAllUsers();
+    const clinicianList: Observable<
+      FFQClinicianResponse[]
+    > = this.clinicianService.getAllClinicians();
+    const parentList: Observable<
+      FFQParentResponse[]
+    > = this.parentService.getAllParents();
+    const clinicList: Observable<
+      FFQClinicResponse[]
+    > = this.clinicService.getAllClinics();
+    const adminList: Observable<
+      FFQAdminResponse[]
+    > = this.adminService.getAllUsers();
+    const researchList: Observable<
+      FFQResearcher[]
+    > = this.researchService.getAllUsers();
 
-
-    clinicList.subscribe(a => {
+    clinicList.subscribe((a) => {
       this.ffqclinicList = a;
-      console.log(a);
-      a.forEach(clinic =>{
-
+      a.forEach((clinic) => {
         this.clinicNames.push(clinic.clinicname);
       });
 
-       clinicianList.subscribe(b => {
-         this.ffqclinicianList = b;
+      clinicianList.subscribe((b) => {
+        this.ffqclinicianList = b;
 
-         b.forEach(clinician =>  {
-          //console.log(clinician);
+        b.forEach((clinician) => {
+          const clinicianClinic = a.find(
+            (n) => n.clinicId === clinician.assignedclinic
+          );
 
-          var clinicianClinic = a.find(n => n.clinicId == clinician.assignedclinic);
-
-          if(!!clinicianClinic){
-            var clinicianClinicName = clinicianClinic.clinicname;
+          if (!!clinicianClinic) {
+            const clinicianClinicName = clinicianClinic.clinicname;
             this.clinicianClinicNames.push(clinicianClinicName);
           }
-
         });
-        //console.log(this.clinicianClinicNames);
-
-          parentList.subscribe(c => {
+        parentList.subscribe((c) => {
           this.ffqparentList = c;
 
-          c.forEach(parent => {
+          c.forEach((parent) => {
+            const clinicians = b.find((n) => n.userId === parent.assignedclinic);
 
-            var clinicians = b.find(n => n.userId == parent.assignedclinic);
-
-            if(!!clinicians){
-              var parentClinic = a.find(n => n.clinicId == clinicians.assignedclinic);
-              if(!!parentClinic){
-                var parentClinicName = parentClinic.clinicname;
+            if (!!clinicians) {
+              const parentClinic = a.find(
+                (n) => n.clinicId === clinicians.assignedclinic
+              );
+              if (!!parentClinic) {
+                this.parentClinicName = parentClinic.clinicname;
               }
             }
-            this.parentClinicNames.push(parentClinicName);
+            this.parentClinicNames.push(this.parentClinicName);
           });
-          });
-       });
+        });
+      });
     });
 
-    adminList.subscribe(admin => {
-
+    adminList.subscribe((admin) => {
       this.ffqadminList = admin;
+    });
+
+    researchList.subscribe((research) => {
+      this.ffqresearchList = research;
     });
   }
 }

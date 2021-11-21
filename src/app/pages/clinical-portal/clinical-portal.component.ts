@@ -8,7 +8,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { FFQClinician } from 'src/app/models/ffqclinician';
 import { FFQParent } from 'src/app/models/ffqparent';
 import { FFQClinic } from 'src/app/models/ffqclinic';
@@ -33,12 +33,16 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 
 export class ClinicalPortalComponent implements OnInit  {
 
-  private showClinicians: boolean;
-  private showParents: boolean;
+  public showClinicians: boolean;
+  public showParents: boolean;
+  public showClinics: boolean;
   private hideUnassignedParents: boolean;
   private hideUnassignedClinicians: boolean;
   p_search: string;
   c_search: string;
+  loggedInUser = this.authenticationService.currentUserValue;
+  private clinicParentLimit: number;
+  private countDifPrefix: 0;
 
   constructor(
     public parentService: ParentService,
@@ -58,33 +62,38 @@ export class ClinicalPortalComponent implements OnInit  {
   ffqclinicList: FFQClinic[] = [];
   clinicNames: string[] = [];
   clinicianNames: string[] = [];
+  clinicianUserNames: string[] = [];
   numberOfPatients: number[] = [];
   public filtered_clinicians: String[] = [];
   public filtered: boolean;
   private clinicId: string;
   private clinicianList: FFQClinician[] = [];
   private parentList: FFQParent[] = [];
-  private numberOfPatientz: number[] = [];
-  private numberOfChildren: number[] = [];
-  private currentClinicName: string;
-
+  private clinicList: FFQClinic[] = [];
+  public currentClinicName: string;
   public UserList: User[];
+  public count: 0;
 
   ngOnInit() {
 
     this.showClinicians = true;
+    this.showClinics = true;
     this.showParents = true;
     this.hideUnassignedParents = false;
     this.hideUnassignedClinicians = false;
-
-    this.clinicianNames.push("");
-
+    this.clinicianNames.push('');
+    this.clinicianUserNames.push('');
     this.getClinicId();
   }
 
   toggleClinicians($event)
   {
     this.showClinicians = !this.showClinicians;
+  }
+
+  toggleClinics($event)
+  {
+    this.showClinics = !this.showClinics;
   }
 
   toggleParents($event)
@@ -105,7 +114,7 @@ export class ClinicalPortalComponent implements OnInit  {
   filterByClinician(clinician_name: string)
   {
     const index = this.filtered_clinicians.indexOf(clinician_name);
-    if(index === -1)
+    if (index === -1)
     {
       this.filtered_clinicians.push(clinician_name);
     }
@@ -113,7 +122,7 @@ export class ClinicalPortalComponent implements OnInit  {
     {
       this.filtered_clinicians.splice(index, 1);
     }
-    if(this.filtered_clinicians.length == 0)
+    if (this.filtered_clinicians.length == 0)
     {
       this.filtered = false;
     }
@@ -125,14 +134,11 @@ export class ClinicalPortalComponent implements OnInit  {
 
   private getClinicId(){
 
-    var clinicListObervable: Observable<FFQClinicResponse[]> = this.clinicService.getAllClinics();
-    const loggedInUser = this.authenticationService.currentUserValue;
-    var clinicId: string;
+    const clinicListObervable: Observable<FFQClinicResponse[]> = this.clinicService.getAllClinics();
 
-    console.log("Logged in user clinic: " + loggedInUser[0].assignedclinic);
     clinicListObervable.subscribe(clinicList => {
-      var clinic = clinicList.find(a => a.clinicId == loggedInUser[0].assignedclinic);
-      if(clinic){
+      const clinic = clinicList.find(a => a.clinicId == this.loggedInUser[0].assignedclinic);
+      if (clinic){
         this.clinicId = clinic.clinicId;
         this.currentClinicName = clinic.clinicname;
       }
@@ -141,65 +147,83 @@ export class ClinicalPortalComponent implements OnInit  {
 
   }
 
-    //loadData function serves to store the result and parent names into the FFQParentResult object
+    // loadData function serves to store the result and parent names into the FFQParentResult object
     //                  serves to display the questionnaire-result data using the specification based on PO's list
   loadData(){
-    var clinicianListObservable: Observable<FFQClinicianResponse[]> = this.clinicianService.getAllClinicians();
-    var parentListObservable: Observable<FFQParentResponse[]> = this.parentService.getAllParents();
+    const clinicianListObservable: Observable<FFQClinicianResponse[]> = this.clinicianService.getAllClinicians();
 
     clinicianListObservable.subscribe(clinicianList => {
-      parentListObservable.subscribe(parentList => {
         clinicianList.forEach(clinician => {
-          var count = 0;
-          if(clinician.assignedclinic == this.clinicId){
+          if (clinician.assignedclinic === this.clinicId){
             this.clinicianList.push(clinician);
           }
         });
-
-        this.getNumberOfPatients();
+        // this.getNumberOfPatients();
         this.getClinicianNames();
-        });
+        this.getClinics();
       });
-
   }
 
   getParents(){
-    var parentListObservable: Observable<FFQParentResponse[]> = this.parentService.getAllParents();
-    var parentInClinic: FFQParent[];
+    this.count = 0;
+    const parentListObservable: Observable<FFQParentResponse[]> = this.parentService.getAllParents();
 
     parentListObservable.subscribe(parentList => {
       parentList.forEach(parent => {
-        if(parent.assignedclinic == this.clinicId){
+        if (parent.assignedclinic === this.clinicId && parent.prefix === this.loggedInUser[0].prefix){
           this.parentList.push(parent);
+        }
+        if (parent.assignedclinic === this.loggedInUser[0].assignedclinic){
+          this.count++;
         }
       });
       this.loadData();
     });
   }
 
-  getNumberOfPatients(){
-
-    this.clinicianList.forEach(clinician => {
-      var count = 0;
-      this.parentList.forEach(parent => {
-        if(parent.assignedclinician == clinician.userId){
-          count++;
-        }
-      });
-      this.numberOfPatients.push(count);
-      console.log("clinicianNames in function");
-      console.log(this.clinicianNames);
-    });
-  }
+  // getNumberOfPatients(){
+  //   this.count = 0;
+  //   // this.clinicianList.forEach(clinician => {
+  //   this.parentList.forEach(parent => {
+  //       // if (parent.assignedclinic === clinician.assignedclinic && clinician.assignedclinic === this.loggedInUser[0].assignedclinic ){
+  //       if (parent.assignedclinic == this.loggedInUser[0].assignedclinic ){
+  //         this.count++;
+  //       }
+  //     });
+  //   this.numberOfPatients.push(this.count);
+  //     // });
+  // }
 
   getClinicianNames(){
-    var clinicianList: Observable<FFQClinicianResponse[]> = this.clinicianService.getAllClinicians();
-      clinicianList.subscribe(a => {
+    const clinicianList: Observable<FFQClinicianResponse[]> = this.clinicianService.getAllClinicians();
+    clinicianList.subscribe(a => {
       this.ffqclinicianList = a;
       for (let i = 0; i < a.length; i++) {
-        this.clinicianNames.push(a[i].abbreviation + " " + a[i].firstname + " " + a[i].lastname);
+        this.clinicianNames.push(a[i].abbreviation + ' ' + a[i].firstname + ' ' + a[i].lastname);
+        this.clinicianUserNames.push(a[i].username);
       }
     });
   }
+
+  private getClinics(){
+
+    const clinicListObervable: Observable<FFQClinicResponse[]> = this.clinicService.getAllClinics();
+    const loggedInUser = this.authenticationService.currentUserValue;
+
+    let clinicId: string;
+    clinicListObervable.subscribe(clinicList => {
+      clinicList.forEach(clinic => {
+        if (clinic.clinicId === this.clinicId) {
+          this.clinicList.push(clinic);
+        }
+        if (clinic.clinicId === this.loggedInUser[0].assignedclinic){
+          this.clinicParentLimit = clinic.parentsLimit;
+        }
+      });
+
+    });
+
+  }
+
 }
 

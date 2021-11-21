@@ -12,7 +12,23 @@ h2 {
   justify-content: center;
   margin-bottom: 10px;
 }
-
+li.GoalList{
+    font-size: 22px;
+    opacity: 0.8;
+    
+}
+h2.GoalTitle{
+    font-size: 22px;
+    text-align: left;
+    opacity: 0.7;
+    line-height: 40%;
+}
+h2.Insta{
+    font-size: 22px;
+    text-align: left;
+    opacity: 0.7;
+    font-weight: bold;
+}
 .qb-row-item {
   padding: 0 20px;
   width: 100%;
@@ -24,7 +40,7 @@ h2 {
 }
 
 .tracker-container {
-  padding-top: 140px;
+  padding-top: 200px;
   margin-bottom: 50px;
 }
 
@@ -56,11 +72,27 @@ mat-button-toggle-group {
   width: 50px;
 }
 
+.lang-button-div {
+  text-align: center; 
+}
+
+.lang-button {
+  background-color: #35a2a6;
+  top: 10px;
+  color: white;
+}
+
+@media (max-width: 500px) {
+  .tracker-card {
+    width: 90%;
+  } 
+}
+
 /* .mat-button-toggle-checked {
   background-color: #6880EE;
 } */
 
-.top{
+/*.top{
   color: #d96459;
 }
 
@@ -70,4 +102,4 @@ mat-button-toggle-group {
 
 .bot{
   color: #ffcc5c;
-}
+}*/
