@@ -9,8 +9,7 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 })
 
 export class LogoutComponent implements OnInit {
-  ngOnInit() {}
-/*
+
   constructor(
     private authentocationService: AuthenticationService,
     private router: Router) {
@@ -18,8 +17,8 @@ export class LogoutComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authentocationService.logOut();
+    this.authentocationService.logout();
     this.router.navigate(['login']);
   }
-*/
+
 }
