@@ -1,0 +1,24 @@
+<div class="container">
+  <h2 matDialogTitle>{{'DQIS' | translate}}</h2>
+  <mat-dialog-content>
+    <div class="tableDiv">
+      <table *ngFor="let result of dqis">
+        <tr>
+          <th> {{'Food Item' | translate}} </th>
+          <th> {{'Calculated Points' | translate}} </th>
+        </tr>
+        <tr *ngFor="let food of result.foodCategoryRecList; let i = index">
+          <td>{{'result.' + i + '.foodItemGroupName' | translate}}</td>
+          <td style="text-align: center" >{{food.calculatedAmount | resultRound}}</td>
+        </tr>
+        <tr>
+          <th>{{"Total Points"}}</th>
+          <th style="text-align:center">{{calculateTotalPoints()}}</th>
+        </tr>
+      </table>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button class="dialog-button" mat-raised-button matDialogClose="cancel" color="primary">Ok</button>
+  </mat-dialog-actions>
+</div>
