@@ -1,72 +1,266 @@
 h2 {
-  text-align: center;
-  color: white;
+    text-align: center;
+    color: white;
 }
 
 a {
-  text-decoration: none;
+    text-decoration: none;
 }
 
-.header{
-  background-color: #3f51b5;
-  width: 100%;
-  height: auto;
-  position: fixed;
-  z-index: 9999;
+.header {
+    background-color: #3f51b5;
+    width: 100%;
+    height: auto;
+    position: fixed;
+    z-index: 999;
 }
 
-.links{
-  padding-top: 22px;
+.links {
+    padding-top: 22px;
 }
 
-body, html {
-  height: 100%;
-  margin: 0;
-  font-family: Arial;
+body,
+html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial;
 }
+
 
 /* Style tab links */
+
 .tab-link {
-  margin-top: 10px;
-  background-color: #6573C3;
-  color: white;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 10px 16px;
-  font-size: 17px;
-  width: 20%;
-  text-align:center;
+    margin-top: 10px;
+    background-color: #6573C3;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px 16px;
+    font-size: 17px;
+    width: 12.49%;
+    text-align: center;
+    height:65px;
 }
 
-.active{
-  background-color: #2C387E;
-  color: white;
+.active {
+    background-color: #2C387E;
+    color: white;
 }
+
 .tab-link:hover {
-  background-color: #B2B9E1;
-  color: #2C387E;
-  font-weight: bold;
+    background-color: #B2B9E1;
+    color: #2C387E;
+    font-weight: bold;
 }
+
 
 /* Style the tab content (and add height:100% for full page content) */
-.tabcontent {
-  color: white;
-  display: none;
-  padding: 100px 20px;
-  height: 100%;
-}
 
+.tabcontent {
+    color: white;
+    display: none;
+    padding: 100px 20px;
+    height: 100%;
+}
 
 .login-button {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  padding: 20px 10px;
-  
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    padding: 20px 10px;
 }
 
-::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-accent .mat-pseudo-checkbox-checked, .mat-accent .mat-pseudo-checkbox-indeterminate, .mat-pseudo-checkbox-checked, .mat-pseudo-checkbox-indeterminate{
-  background-color: #2C387E;
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
+.mat-accent .mat-pseudo-checkbox-checked,
+.mat-accent .mat-pseudo-checkbox-indeterminate,
+.mat-pseudo-checkbox-checked,
+.mat-pseudo-checkbox-indeterminate {
+    background-color: #2C387E;
+}
+
+.logoutone {
+    position:relative;
+    top: -10px;
+}
+
+
+#menus {
+    font-size:30px;
+    color:white;
+    position:relative;
+    top:-25px;
+    display:none;
+}
+
+@media(max-width:1391px) {
+
+.tab-link {
+  font-size:90%;
+}
+
+
+
+}
+
+@media(max-width:1144px) {
+  .tab-link {
+    height:58px;
+  }
+}
+
+@media(max-width:1024px) {
+
+  .tab-link {
+    font-size:90%;
+  }
+
+}
+
+
+@media(max-width:940px) {
+
+    .tab-link,
+    .tab-link.active {
+        opacity:0;
+    }
+
+    
+    .tab-link.superactive,
+    .tab-link.active.superactive {
+        opacity:1;
+        position:absolute;
+        display:block;
+        width:100%;
+        z-index:2;
+    }
+
+      .tab-link:nth-of-type(1).superactive {
+        top:-10px;
+      }
+    
+      .tab-link:nth-of-type(2).superactive {
+        top:45px;
+      }
+    
+      .tab-link:nth-of-type(3).superactive {
+        top:100px;
+      }
+    
+      .tab-link:nth-of-type(4).superactive {
+        top:155px;
+      }
+    
+      .tab-link:nth-of-type(5).superactive {
+        top:210px;
+      }
+
+      .tab-link:nth-of-type(6).superactive {
+        top:265px;
+      }
+
+      .tab-link:nth-of-type(7).superactive {
+        top:320px;
+      }
+    
+      .tab-link:nth-last-of-type(1).superactive {
+        top:370px;
+      }
+
+
+    #menus {
+        display:block;
+        left:850px;
+        font-size:40px;
+        z-index:10;
+    }
+
+    .header {
+        padding-bottom:100px;
+    }
+
+}
+
+
+
+@media(max-width:900px) {
+
+    #menus {
+        transform: translateX(-170px);
+        transition: transform 4.4s ease 0s;       
+    }
+
+}
+
+@media(max-width:750px) {
+
+    #menus {
+        transform: translateX(-250px);
+        transition: transform 4.4s ease 0s;  
+    }
+
+
+}
+
+@media(max-width:643px) {
+
+    #menus {
+        transform: translateX(-370px);
+        transition: transform 4.4s ease 0s;   
+    }
+
+
+
+}
+
+
+@media(max-width:527px) {
+
+    #menus {
+        transform: translateX(-530px);
+        transition: transform 7.4s ease-in-out;
+    }
+
+}
+
+
+@media(max-width:414px) {
+
+    .logoutone {
+        top: 110px;
+        left:-124px;
+        z-index:3;
+    }
+
+    .tab-link,
+    .tab-link.active {
+        z-index:2;
+    }
+
+    .tab-link:nth-of-type(1).superactive,
+    .tab-link:nth-of-type(2).superactive,
+    .tab-link:nth-of-type(3).superactive,
+    .tab-link:nth-of-type(4).superactive,
+    .tab-link:nth-of-type(5).superactive,
+    .tab-link:nth-of-type(6).superactive,
+    .tab-link:nth-of-type(7).superactive,
+    .tab-link:nth-last-of-type(1).superactive {
+        z-index:4;
+    }
+
+
+
+}
+
+@media(max-width:380px) {
+
+    .logoutone {
+        top: 110px;
+        left:-118px;
+        z-index:3;
+    }
+
+
 }

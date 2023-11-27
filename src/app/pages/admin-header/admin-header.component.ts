@@ -24,6 +24,23 @@ export class AdminHeaderComponent {
       this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
+  change() {
+
+    let menuclickable = document.getElementById("menus");
+
+    let navbarclickable = document.querySelectorAll(".tab-link");
+
+    menuclickable.classList.toggle('bxs-x-circle');
+
+    // menuclickable.style.color = 'black';
+
+    navbarclickable.forEach(tab => {
+      tab.classList.toggle("superactive");
+    })
+
+  
+  }
+
   logout() {
       this.authenticationService.logout();
       this.router.navigate(['/login']);

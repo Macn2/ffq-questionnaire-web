@@ -1,10 +1,12 @@
+
 <clinical-header></clinical-header>
 
 <form #myForm="ngForm">
   <div class="form-group">
     <div class="container_page" *ngIf="dataLoaded">
       <div class="container" style="margin-top: 15px;"><a routerLink="/clinic/home" style="color:#7E1608" ><span
-            class="fa fa-chevron-circle-left"></span> Back to Home </a></div>
+            class="fa fa-chevron-circle-left"></span> Back to Home </a>
+      </div>
 
 
       <div class="container mt-3">
@@ -36,23 +38,29 @@
                   class="form-control" readonly name="username" [(ngModel)]="userAttributes[0].username">-->
 
                 <input style="border-width: 0.05cm" type="text"
-                  class="form-control" name="username" [(ngModel)]="userAttributes.username" required>
+                  class="form-control" name="username" [(ngModel)]="userAttributes.username" [disabled]="true">
                 <br>
-                <label style="font-weight: bold"> Name of Parent </label>
-                <input style="border-width: 0.05cm" placeholder="First Name" type="text" class="form-control"
-                  name="firstname" [(ngModel)]="userAttributes.firstname"/>
-                <br>
-                <input style="border-width: 0.05cm" placeholder="Last Name" type="text" class="form-control"
-                  name="lastname" [(ngModel)]="userAttributes.lastname"/>
+                <label style="font-weight: bold"> Password Reset </label>
+                <div style="display: flex; align-items: stretch; justify-content: space-between">
+                  <input style="border-color: gray; border-width: 0.05cm; width:68%" type="text"
+                         class="form-control" name="newPassword" [(ngModel)]="userAttributes.userpassword">
+                  <button mat-raised-button style="width:30%" class="update" (click)="generatePassword()">
+                    Generate new password
+                  </button>
+                </div>
                 <br>
                 <label style="font-weight: bold"> Assigned Clinician </label>
                 <br>
                 <mat-form-field>
                   <mat-label appearance="fill">Choose Clinician...</mat-label>
                   <mat-select matNativeControl name="assignedclinician" [(value)]="userAttributes.assignedclinician" required>
-                    <mat-option *ngFor="let u of ffqclinicianList" [hidden]="u.assignedclinic != userAttributes.assignedclinic" [value]="u.userId">{{ u.abbreviation }} {{ u.firstname }} {{ u.lastname }}</mat-option>
+                    <mat-option *ngFor="let u of ffqclinicianList" [hidden]="u.assignedclinic != userAttributes.assignedclinic" [value]="u.userId">{{ "clinician" + u.userId }}</mat-option>
                   </mat-select>
                 </mat-form-field>
+
+                <!--<div align="middle"><button mat-raised-button class="delete" style="margin-right: 20px;" (click)="deleteUser()">
+                  Delete
+                </button></div> Don't need delete button -->
                 <!--<hr>
                 <label style="font-weight: bold"> Children </label>
                 <table class="table table-bordered table-inverse">
@@ -84,7 +92,7 @@
 
                 <label style="font-weight: bold"> Username </label>
                 <input style="border-width: 0.05cm" type="text"
-                  class="form-control" name="username" [(ngModel)]="userAttributes.username" required>
+                  class="form-control" name="username" [(ngModel)]="userAttributes.username" [disabled]="true">
                 <br>
                 <label style="font-weight: bold"> Role / Abbreviation </label>
                 <input style="border-width: 0.05cm" placeholder="Role" type="text" class="form-control" name="abbreviation" [(ngModel)]="userAttributes.abbreviation"/>

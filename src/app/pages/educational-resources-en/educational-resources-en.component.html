@@ -1,0 +1,153 @@
+<!-- <app-parental-header></app-parental-header> -->
+<title>{{ "PARENTPORTAL.TITLE" | translate }}</title>
+<div class="header">
+  <a routerLink="/parent/home">
+    <div class="homeitem-container">
+      <div class="homeitem-content">
+        <div class="homeitem-svg-title">
+          <img
+            class="header-logo"
+            src="assets/images/logo.png"
+            alt=""
+            height="120"
+            width="120"
+            routerLink="/parent/home"
+          />
+        </div>
+
+        <div class="homeitem-title">
+          <h1>{{ "Parental Portal" | translate }}</h1>
+          <h2>{{ "Welcome to Parent/Caregiver Portal" | translate }}</h2>
+          <p>
+            {{
+              "Each tab has different resources, please click to a resource to view."
+                | translate
+            }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </a>
+  <!-- <h2 matDialogTitle><a routerLink="/parent/home">{{ "PARENTPORTAL.TITLE" | translate }}</a></h2> -->
+  <div align="center">
+    <!-- <i> <img class="header-logo" src="assets/images/logo.png" alt="" height="80" width="80" routerLink="/parent/home"/> </i> -->
+  </div>
+  <div class="login-button">
+    <button mat-raised-button routerLink="/parent/home">
+      {{ "Home" | translate }}<i class="fa fa-sign-out" aria-hidden="true"></i>
+    </button>
+    <button mat-raised-button (click)="logout()" translate>
+      {{ "Log out" | translate
+      }}<i class="fa fa-sign-out" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <div align="center"><i></i></div>
+</div>
+
+<div class="item-container">
+  <div class="row no-gutters">
+    <div class="col-md-6 p-1">
+      <mat-card class="title-card">
+        <h1>{{ "0 - 6 Months of Age" | translate }}</h1>
+      </mat-card>
+      <mat-card>
+        <button (click)="breastfeedTips()" class="my-button">
+          <h2>{{ "Breastfeeding Tips for New Mothers" | translate }}</h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="breastFeeding()" class="my-button">
+          <h2>{{ "Breastfeeding" | translate }}</h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="instantForm()" class="my-button">
+          <h2>{{ "Bottle Feeding: Infant Formulas" | translate }}</h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="babyDrink()" class="my-button">
+          <h2>{{ "What Should My Baby Drink?" | translate }}</h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="adven1()" class="my-button">
+          <h2>
+            {{
+              "Raising Adventurous Eaters with First Foods: 1-4 Months Guide"
+                | translate
+            }}
+          </h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="adven4()" class="my-button">
+          <h2>
+            {{
+              "Raising Adventurous Eaters with First Foods: 4-6 Months Guide"
+                | translate
+            }}
+          </h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="solidFood()" class="my-button">
+          <h2>
+            {{ "Is Your Baby Ready to Start Eating Solid Foods?" | translate }}
+          </h2>
+        </button>
+      </mat-card>
+    </div>
+    <div class="col-md-6 p-1">
+      <mat-card class="title-card">
+        <h1>{{ "6 - 12 Months of Age" | translate }}</h1>
+      </mat-card>
+      <mat-card>
+        <button (click)="goodFirstFood()" class="my-button">
+          <h2>{{ "What is a Good First Food For Your Baby?" | translate }}</h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="babyWeaning()" class="my-button">
+          <h2>{{ "Baby-led Weaning" | translate }}</h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="ncFirstFood()" class="my-button">
+          <h2>{{ "No-cook First Foods" | translate }}</h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="sweetPotato()" class="my-button">
+          <h2>{{ "How to Cook Sweetpotato" | translate }}</h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="howMuch()" class="my-button">
+          <h2>{{ "How Much Should I Feed My Baby?" | translate }}</h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="peanutFood()" class="my-button">
+          <h2>{{ "Peanut Foods for Babies" | translate }}</h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="foodAvoid()" class="my-button">
+          <h2>{{ "Foods to Avoid" | translate }}</h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="adven6()" class="my-button">
+          <h2>
+            {{
+              "Raising Adventurous Eaters with First Foods: 6-9 Months Guide"
+                | translate
+            }}
+          </h2>
+        </button>
+      </mat-card>
+    </div>
+  </div>
+</div>

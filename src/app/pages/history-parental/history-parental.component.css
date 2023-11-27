@@ -4,23 +4,16 @@
 }
 
 .container_page{
-  padding-top: 140px;
+  padding-top: 200px;
   margin-bottom: 50px;
 }
+
 .container-choices{
   padding-top: 30px;
   margin-bottom: 20px;
   margin-left:40px;
 }
 
-.quest-results-card {
-  width: 60%;
-  display: inline-flex;
-  justify-content: center;
-  align-content: center;
-  padding: 50px;
-  height: 200px;
-}
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
@@ -40,3 +33,59 @@ tr:nth-child(even) {
 .tableDiv {
   padding: 35px;
 }
+
+.quest-id-card {
+  text-align: center;
+}
+
+
+@media(max-width:695px) {
+  .container {
+    margin-top:100px;
+  }
+}
+
+@media(max-width:646px) {
+
+  .btn-info {
+    transition: trasform 3.4s ease 0s;
+  }
+
+}
+
+
+
+@media(max-width:483px) {
+
+  .btn-info {
+    /* border: 1px solid black; */
+    margin-left:-280px;
+  }
+
+}
+
+
+
+
+@media(max-width:320px) {
+
+    #questionnairesID {
+      width:50px;
+    }
+
+    #responseq {
+      /* width:330px; */
+      /* padding-left:50px; */
+      /* border:1px solid black; */
+      text-align:left;
+    }
+
+    .quest-id-card {
+      /* border: 1px solid black; */
+      width:310px;
+      margin-left:-10px;
+    }
+
+
+}
+

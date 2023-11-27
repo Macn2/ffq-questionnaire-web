@@ -1,0 +1,387 @@
+<admin-header></admin-header>
+
+  <h1 class = "growthy">Growth Charts</h1>
+
+  <!-- {{type(ffqparentList[0])}} -->
+
+  <p class = "description">Growth charts are essentially proportion curves which aim to present the distribution of selected quantitative data in children. Growth charts are analyzed by nutritionists to track the growth of babies, young adolescents, and adolescents.
+    Growth charts are essentially tools that allow the proper analysis of a child's health. It is not the sole indicative of health, but it is one of the main parts of the process that determines health levels.
+  </p>
+
+  <div class = "my-display-now">
+
+    <div class = "grid">
+      <img src = "../../../assets/adminresult-images/image-child.jpeg" width = "300">
+    </div>
+
+    <div class = "grid">
+      <img src = "../../../assets/adminresult-images/image-child2.jpeg" width = "300">
+    </div>
+
+    <div class = "grid">
+      <img src = "../../../assets/adminresult-images/image-child3.jpeg" width = "300">
+    </div>
+
+  </div>
+
+  <div class="container_page">
+    <div class="container" *ngIf="results.length === 0">
+        <mat-card class="quest-id-card">
+            <h2 matDialogTitle>{{'No questionnaires have been submitted yet' | translate}}</h2>
+          </mat-card>
+    </div>
+    <div align="center" *ngIf="parentResults.length != 0">
+
+      <!-- <button type="button" (click)="exportAll2()" class="btn btn-danger10"> Download Results </button> -->
+
+      <!--To be uncommented below-->
+
+      <!-- <div *ngIf = "parentResults.length < 5">
+         <button type="button" (click)="exportAll2()" class="btn btn-danger10"> Download Results </button>
+      </div>
+      <div *ngIf = "parentResults.length > 4">
+        <button type="button" (click) = "exportAllAnotherAttempt()"class="btn btn-danger10"> Download Results </button>
+      </div> -->
+
+      <!--To be uncommented above-->
+
+    </div>
+
+            <!--1-->
+
+  <div [hidden]="showParent" class="container mt-3" *ngIf="parentResults.length != 0">
+        <label style="font-weight:bold"> Growth Chart Results </label>
+        <br/>
+        <span> {{ parentResults.length }} result(s) </span>
+        <div style="margin-bottom: 15px">
+          <input style="width: 25%; display: inline-block;  margin-left: 5px;" placeholder="Search..." type="text"
+                 class="form-control"
+                 name="search" [(ngModel)]="searchResults"/>
+        </div>
+
+        <!-- {{parentResults | json}} -->
+
+  <div *ngFor = "let parent of ffqparentList; let j = index">
+
+    <div *ngFor = "let a of create(ffqparentList,j)">
+
+      <div *ngFor = "let dog of createArray(a); let z = index">
+
+        <mat-card class="quest-id-card">
+
+          <!--Labels for Growth Chart Results-->
+          <mat-card-content>
+
+              <div class="row">
+                <div  class="col" style="text-align:center">
+                  <label><strong>ID</strong></label>
+                </div>
+                <div class="col" style="text-align:center">
+                  <label><strong>Date</strong></label>
+                </div>
+
+                <div  class="col" style="text-align:center">
+                  <label><strong>Infant age (months)</strong></label>
+                </div>
+
+                <div class = "col" style = "text-align:center">
+                  <label><strong>Infant weight (kg)</strong></label>
+                </div>
+
+                <div class = "col" style = "text-align:center">
+                  <label><strong>Infant length (cm)</strong></label>
+                </div>
+
+                <div class = "col" style = "text-align:center">
+                  <label><strong>Percentile</strong></label>
+                </div>
+
+              </div>
+
+                <!-- Growth Chart Results -->
+              <div class="row mb-3">
+                <div class="col" style="text-align:center">
+                  <strong>{{ffqparentList[j].userId}}</strong>
+                </div>
+                <div class="col" style="text-align:center">
+                  <strong>{{checker(ffqparentList[j].username,a[z].childData[0].age,parentResults)}}</strong>
+                </div>
+
+                <div class="col" style="text-align:center">
+                  <strong>{{a[z].childData[0].age}}</strong>
+                </div>
+
+                <div class = "col" style = "text-align:center">
+                   <!-- {{ffqparentList[i].children[ffqparentList[i].children.length-1-i].childData[0].weight}} -->
+                  <!-- {{parent.children[parent.children.length-i-1].childData[0].weight}} -->
+                  <!-- {{ffqparentList[ffqparentList.length-j-1].children[importanttwo(ffqparentList[ffqparentList.length-j-1],ffqparentList.length-j-1)-i-1].childData[0].weight}} -->
+                  <strong>{{a[z].childData[0].weight}}</strong>
+                </div>
+
+                <div class = "col" style = "text-align:center">
+                  <!-- {{ffqparentList[i].children[ffqparentList[0].children.length-1-i].childData[0].height}} -->
+                  <!-- {{ffqparentList[i].children[ffqparentList[i].children.length-1-i] | json}} -->
+                  <!-- {{parent.children[parent.children.length-i-1].childData[0].height}} -->
+                  <!-- {{ffqparentList[ffqparentList.length-Math.floor(i/2)-1] | json}} -->
+                  <!-- {{ffqparentList[i].children.length}} -->
+                  <!-- {{ffqparentList[ffqparentList.length-j-1].children[importanttwo(ffqparentList[ffqparentList.length-j-1],ffqparentList.length-j-1)-i-1].childData[0].height}} -->
+                 <strong>{{a[z].childData[0].height}}</strong>
+                </div>
+
+                <div class = "col" style = "text-align:center">
+                 <!-- {{percentileCalculator(ffqparentList[ffqparentList.length-j-1].children[importanttwo(ffqparentList[ffqparentList.length-j-1],ffqparentList.length-j-1)-i-1].childData[0].height,ffqparentList[ffqparentList.length-j-1].children[importanttwo(ffqparentList[ffqparentList.length-j-1],ffqparentList.length-j-1)-i-1].childData[0].weight)}} -->
+                 <strong>{{percentileCalculator(a[z].childData[0].height,a[z].childData[0].weight)}}</strong>
+                </div>
+
+                <!-- z:
+                {{z}}
+                <br>
+                j:
+                {{j}} -->
+
+                <div class="col-12 offset-10000">
+
+                  <button mat-raised-button class="btn btn-danger" (click) = "export(ffqparentList[j],j,z,a)">
+                    Download
+                  </button>
+
+                  <!-- <button mat-raised-button class="btn btn-danger" (click)="deleteQuestionnaire(result.questionnaireId)">
+                    Delete
+                  </button> -->
+                </div>
+              </div>
+            </mat-card-content>
+        </mat-card>
+
+        <!-- ID: {{ffqparentList[j].userId}}
+        <br>
+        Date: {{checker(ffqparentList[j].username,a[z].childData[0].age,parentResults)}}
+        <br> -->
+        <!-- Age: {{a[z].childData[0].age}} -->
+        <!-- <br>
+        Weight: {{a[z].childData[0].weight}} -->
+        <!-- <br>
+        Height: {{a[z].childData[0].height}}
+        <br>
+        Percentile: {{percentileCalculator(a[z].childData[0].height,a[z].childData[0].weight)}} -->
+
+      </div>
+
+    </div>
+
+
+  </div>
+                <!-- <mat-card class="quest-id-card" (mouseover) = "setChildGender(result.gender)"> -->
+
+  </div>
+
+
+    <!--To be deleted below-->
+
+  <!--To be deleted above-->
+
+
+
+
+
+  <!-- <div *ngFor = "let parent of ffqparentList; let i = index">
+   <h1>{{parent.children[0].childData[0].weight}}</h1>
+  <h1>{{parent.children.length | json}}</h1>
+
+  </div> -->
+
+  <!-- <div *ngFor = "let parent of ffqparentList; let i = index">
+    <h1>{{i}}</h1>
+    <h1>{{ffqparentList[i].children.length}}</h1>
+  </div> -->
+
+
+  <!-- Usually the things that are commented out are things that
+  failed. But in this case, the below code worked (on a small test).
+  I comment it out because it needed structure, but the code
+  below is the basis for showing the growth chart results correctly -->
+
+  <!--
+  <div *ngFor = "let parent of ffqparentList; let j = index">
+
+    <div *ngFor = "let a of create(ffqparentList,j)">
+
+      <div *ngFor = "let dog of createArray(a); let z = index">
+
+        ID: {{ffqparentList[j].userId}}
+        <br>
+        Date: {{checker(ffqparentList[j].username,a[z].childData[0].age,parentResults)}}
+        <br>
+        Age: {{a[z].childData[0].age}}
+        <br>
+        Weight: {{a[z].childData[0].weight}}
+        <br>
+        Height: {{a[z].childData[0].height}}
+        <br>
+        Percentile: {{percentileCalculator(a[z].childData[0].height,a[z].childData[0].weight)}}
+
+      </div>
+
+    </div>
+
+  </div> -->
+
+  <br><br><br><br><br><br><br><br><br>
+
+  <div align="center" *ngIf="participantResults.length != 0">
+
+    <!--To be uncommented below-->
+
+    <!-- <div *ngIf = "participantResults.length < 5">
+    <button type="button" (click)="exportAll3()" class="btn btn-danger10"> Download Results </button>
+  </div>
+   <div *ngIf = "participantResults.length > 4">
+     <button type="button" class="btn btn-danger10"> Download Results </button>
+   </div> -->
+
+   <!--To be uncommented above-->
+
+   <!-- <button type="button" (click)="node()" class="btn btn-danger10"> Download Results </button> -->
+   <!--Attempt-->
+  </div>
+
+  <div [hidden]="showParent" class="container mt-3" *ngIf="participantResults.length != 0">
+    <label style="font-weight:bold"> Growth Chart Results </label>
+    <br/>
+    <span> {{ participantResults.length }} result(s) </span>
+    <div style="margin-bottom: 15px">
+      <input style="width: 25%; display: inline-block;  margin-left: 5px;" placeholder="Search..." type="text"
+             class="form-control"
+             name="search" [(ngModel)]="searchResults"/>
+    </div>
+
+  <div *ngFor = "let parent of ffqParticipantList; let j = index">
+
+  <div *ngFor = "let a of create(ffqParticipantList,j)">
+
+  <div *ngFor = "let dog of createArray(a); let z = index">
+
+    <mat-card class="quest-id-card">
+
+      <!--Labels for Growth Chart Results-->
+      <mat-card-content>
+
+          <div class="row">
+            <div  class="col" style="text-align:center">
+              <label><strong>ID</strong></label>
+            </div>
+            <div class="col" style="text-align:center">
+              <label><strong>Date</strong></label>
+            </div>
+
+            <div  class="col" style="text-align:center">
+              <label><strong>Infant age (months)</strong></label>
+            </div>
+
+            <div class = "col" style = "text-align:center">
+              <label><strong>Infant weight (kg)</strong></label>
+            </div>
+
+            <div class = "col" style = "text-align:center">
+              <label><strong>Infact length (cm)</strong></label>
+            </div>
+
+            <div class = "col" style = "text-align:center">
+              <label><strong>Percentile</strong></label>
+            </div>
+
+          </div>
+
+            <!-- Growth Chart Results -->
+          <div class="row mb-3">
+            <div class="col" style="text-align:center">
+              {{ffqParticipantList[j].userId}}
+            </div>
+            <div class="col" style="text-align:center">
+              {{checker(ffqParticipantList[j].username,a[z].childData[0].age,participantResults)}}
+            </div>
+
+            <div class="col" style="text-align:center">
+              {{a[z].childData[0].age}}
+            </div>
+
+            <div class = "col" style = "text-align:center">
+               <!-- {{ffqparentList[i].children[ffqparentList[i].children.length-1-i].childData[0].weight}} -->
+              <!-- {{parent.children[parent.children.length-i-1].childData[0].weight}} -->
+              <!-- {{ffqparentList[ffqparentList.length-j-1].children[importanttwo(ffqparentList[ffqparentList.length-j-1],ffqparentList.length-j-1)-i-1].childData[0].weight}} -->
+              {{a[z].childData[0].weight}}
+            </div>
+
+            <div class = "col" style = "text-align:center">
+              <!-- {{ffqparentList[i].children[ffqparentList[0].children.length-1-i].childData[0].height}} -->
+              <!-- {{ffqparentList[i].children[ffqparentList[i].children.length-1-i] | json}} -->
+              <!-- {{parent.children[parent.children.length-i-1].childData[0].height}} -->
+              <!-- {{ffqparentList[ffqparentList.length-Math.floor(i/2)-1] | json}} -->
+              <!-- {{ffqparentList[i].children.length}} -->
+              <!-- {{ffqparentList[ffqparentList.length-j-1].children[importanttwo(ffqparentList[ffqparentList.length-j-1],ffqparentList.length-j-1)-i-1].childData[0].height}} -->
+              {{a[z].childData[0].height}}
+            </div>
+
+            <div class = "col" style = "text-align:center">
+             <!-- {{percentileCalculator(ffqparentList[ffqparentList.length-j-1].children[importanttwo(ffqparentList[ffqparentList.length-j-1],ffqparentList.length-j-1)-i-1].childData[0].height,ffqparentList[ffqparentList.length-j-1].children[importanttwo(ffqparentList[ffqparentList.length-j-1],ffqparentList.length-j-1)-i-1].childData[0].weight)}} -->
+             {{percentileCalculator(a[z].childData[0].height,a[z].childData[0].weight)}}
+            </div>
+
+            <div class="col-12 offset-10000">
+
+              <button mat-raised-button class="btn btn-danger" (click) = "export2(ffqParticipantList[j],j,z,a)">
+                Download
+              </button>
+
+              <!-- <button mat-raised-button class="btn btn-danger" (click)="deleteQuestionnaire(result.questionnaireId)">
+                Delete
+              </button> -->
+            </div>
+          </div>
+        </mat-card-content>
+    </mat-card>
+
+    <!-- ID: {{ffqparentList[j].userId}}
+    <br>
+    Date: {{checker(ffqparentList[j].username,a[z].childData[0].age,parentResults)}}
+    <br> -->
+    <!-- Age: {{a[z].childData[0].age}} -->
+    <!-- <br>
+    Weight: {{a[z].childData[0].weight}} -->
+    <!-- <br>
+    Height: {{a[z].childData[0].height}}
+    <br>
+    Percentile: {{percentileCalculator(a[z].childData[0].height,a[z].childData[0].weight)}} -->
+
+  </div>
+
+  </div>
+
+
+  </div>
+            <!-- <mat-card class="quest-id-card" (mouseover) = "setChildGender(result.gender)"> -->
+
+  </div>
+
+
+  </div>
+  <!--
+  <br><br><br>
+
+
+  {{parentResults | json}}
+
+  <br>
+  <br>
+
+  {{ffqparentList | json}}
+
+  <br>
+  <br>
+
+  {{ffqparentList[0] | json}}
+
+  <br>
+  <br>
+
+  {{parentResults.length | json}} -->
