@@ -1,0 +1,143 @@
+<!-- <app-parental-header></app-parental-header> -->
+<title>{{ "PARENTPORTAL.TITLE" | translate }}</title>
+<div class="header">
+  <a routerLink="/parent/home">
+    <div class="homeitem-container">
+      <div class="homeitem-content">
+        <div class="homeitem-svg-title">
+          <img
+            class="header-logo"
+            src="assets/images/logo.png"
+            alt=""
+            height="120"
+            width="120"
+            routerLink="/parent/home"
+          />
+        </div>
+
+        <div class="homeitem-title">
+          <h1>{{ "Portal de Padres" | translate }}</h1>
+          <h2>{{ "Welcome to Parent/Caregiver Portal" | translate }}</h2>
+          <p>
+            {{
+              "Cada pestaña tiene una herramienta diferente, consulte las descripciones a continuación"
+                | translate
+            }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </a>
+  <!-- <h2 matDialogTitle><a routerLink="/parent/home">{{ "PARENTPORTAL.TITLE" | translate }}</a></h2> -->
+  <div align="center">
+    <!-- <i> <img class="header-logo" src="assets/images/logo.png" alt="" height="80" width="80" routerLink="/parent/home"/> </i> -->
+  </div>
+  <div class="login-button">
+    <button mat-raised-button routerLink="/parent/home">
+      {{ "Inicio" | translate
+      }}<i class="fa fa-sign-out" aria-hidden="true"></i>
+    </button>
+    <button mat-raised-button (click)="logout()" translate>
+      {{ "Cerrar sesión" | translate
+      }}<i class="fa fa-sign-out" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <div align="center"><i></i></div>
+</div>
+
+<div class="item-container">
+  <div class="row no-gutters">
+    <div class="col-md-6 p-1">
+      <mat-card class="title-card">
+        <h1>{{ "0 - 6 meses de edad" | translate }}</h1>
+      </mat-card>
+      <mat-card>
+        <button (click)="breastfeedTips()" class="my-button">
+          <h2>{{ "10 consejos para amamantar" | translate }}</h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="babyTake()" class="my-button">
+          <h2>{{ "¿Qué debería tomar mi bebé?" | translate }}</h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="mixBreastfeed()" class="my-button">
+          <h2>{{ "Lactancia Mixta" | translate }}</h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="adven1()" class="my-button">
+          <h2>
+            {{
+              "Haciendo de las comidas con su bebe una aventura: Guia de 1 a 4 meses"
+                | translate
+            }}
+          </h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="adven4()" class="my-button">
+          <h2>
+            {{
+              "Haciendo de las comidas con su bebe una aventura: Guia de 4 a 6 meses"
+                | translate
+            }}
+          </h2>
+        </button>
+      </mat-card>
+    </div>
+    <div class="col-md-6 p-1">
+      <mat-card class="title-card">
+        <h1>{{ "6 - 12 meses de edad" | translate }}</h1>
+      </mat-card>
+      <mat-card>
+        <button (click)="compFeed()" class="my-button">
+          <h2>{{ "Alimentación complementaria a los 6 meses" | translate }}</h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="babyWeaning()" class="my-button">
+          <h2>{{ "Baby-led weaning: Cómo empezar" | translate }}</h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="prepPorr()" class="my-button">
+          <h2>{{ "Cómo preparar 9 papillas" | translate }}</h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="howMuch()" class="my-button">
+          <h2>{{ "Cuánto darle a mi bebé" | translate }}</h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="foodAvoid()" class="my-button">
+          <h2>{{ "Evita estos alimentos" | translate }}</h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="adven6()" class="my-button">
+          <h2>
+            {{
+              "Haciendo de las comidas con su bebe una aventura: Guia de 6 a 9 meses"
+                | translate
+            }}
+          </h2>
+        </button>
+      </mat-card>
+      <mat-card>
+        <button (click)="superFood()" class="my-button">
+          <h2>{{ "5 superalimentos para tu bebé" | translate }}</h2>
+        </button>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+
+<br>
+
+<br>
+<br>

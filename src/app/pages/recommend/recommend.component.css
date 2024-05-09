@@ -4,7 +4,7 @@ h2 {
   }
   
   .container_page{
-    padding-top: 180px;
+    padding-top: 200px;
     margin-bottom: 50px;
   }
   
@@ -15,7 +15,6 @@ h2 {
     padding-top: 20px;
     position: fixed;
   }
-  
   
   a:hover {
     color: blue;
@@ -54,5 +53,35 @@ h2 {
     position: absolute;
     z-index: 99;
 }
-  
-  
+.image {
+  /* change image height here */
+  max-height: 150px;
+  width: auto;
+  padding: 10px;
+}
+
+.item-container {
+  display: flex;
+  flex-direction: row;
+}
+
+mat-card {
+  width: 60%;
+  display: inline-flex;
+  justify-content: center;
+  align-content: center;
+  padding: 30px;
+  margin: 10px;
+}
+
+.rec-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 160px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: row
+}

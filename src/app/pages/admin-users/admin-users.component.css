@@ -2,12 +2,12 @@ h2 {
     text-align: center;
     color: aliceblue;
   }
-  
+
   .container_page{
-    padding-top: 140px;
+    padding-top: 200px;
     margin-bottom: 50px;
   }
-  
+
   .header1{
     background-color: #3f51b5;
     width: 100%;
@@ -15,15 +15,74 @@ h2 {
     padding-top: 20px;
     position: fixed;
   }
-  
-  
-  a:hover {
+
+  .row{
+    display:inline-block;
+    /*padding-left: 10%;*/
+  }
+
+a:hover {
     color: blue;
     cursor: pointer;
   }
-  
+
   .mat-raised-button{
     background-color: #6573C3;
     color: white;
     width: 200px;
+  }
+
+  @media(max-width:940px) {
+
+    .container_page {
+      padding-top:400px;
+    }
+
+  }
+
+  @media(max-width:479px) {
+
+    .mat-raised-button{
+      width:150px;
+
+    }
+
+    tr th{
+      width:50%;
+    }
+
+  }
+
+  @media(max-width:380px) {
+
+    .mat-raised-button{
+      width:120px;
+
+    }
+
+    /* tr th{
+      width:5%;
+    } */
+
+    .firstone {
+     /* border:1px solid black; */
+     width:13%;
+     padding:0px;
+    }
+
+    .secondone {
+      /* border: 1px solid black; */
+      width:15%;
+      padding:0px;
+    }
+
+    tr th:nth-of-type(3) {
+      width:15%;
+      padding:0px;
+    }
+
+  
+
+
+
   }
