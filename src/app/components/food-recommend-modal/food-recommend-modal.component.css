@@ -5,6 +5,7 @@
 .container {
     padding: 20px;
     background-position:fixed;
+    z-index: 99999999999999;
  }
 
 table {
@@ -38,4 +39,19 @@ tr:nth-child(even) {
 
 .concat::before{
   content: '>= ';
+}
+
+.green {
+  color: green;
+  font-weight: bold;
+}
+
+.yellow {
+  color: #ffcb0c;
+  font-weight: bold;
+}
+
+.red {
+  color: red;
+  font-weight: bold;
 }

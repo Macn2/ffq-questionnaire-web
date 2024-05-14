@@ -4,7 +4,7 @@ h2 {
 }
 
 .container_page{
-  padding-top: 140px;
+  padding-top: 200px;
   margin-bottom: 50px;
 }
 
@@ -26,4 +26,22 @@ a:hover {
   background-color: #6573C3;
   color: white;
   width: 200px;
+}
+
+.table tbody{
+  cursor: grab;
+}
+
+.cdk-drop-list-dragging {
+  cursor: grabbing;
+}
+
+
+@media(max-width:940px) {
+
+  .container_page {
+    padding-top:400px;
+  }
+
+
 }

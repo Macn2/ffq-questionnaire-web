@@ -1,0 +1,173 @@
+
+.growthy {
+    /* border: 1px solid black; */
+    padding-top:200px;
+    height:300px;
+    width:100%;
+    color:red;
+    font-size:30px;
+    margin-left:30px;
+  }
+  
+  h1 {
+    color:red;
+  }
+  
+  .description {
+    margin-left:30px;
+    width:1350px;
+  }
+  
+  
+  .container{
+    padding-top: 45px;
+    padding-bottom:20px;
+    margin-bottom: 20px;
+    /* border: 1px solid black; */
+  }
+  .container_page{
+    padding-top: 200px;
+    margin-bottom: 50px;
+  }
+  .container-choices{
+    padding-top: 30px;
+    margin-bottom: 20px;
+    margin-left:40px;
+  }
+  
+  .quest-results-card {
+    width: 60%;
+    display: inline-flex;
+    justify-content: center;
+    align-content: center;
+    padding: 50px;
+    height: 200px;
+  }
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #000000;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+  
+  .tableDiv {
+    padding: 35px;
+  }
+  
+  .mat-raised-button{
+    background-color: #6573C3;
+    color: black;
+  }
+  
+  
+  .quest-id-card {
+    /* background:linear-gradient(to right,rgb(233, 98, 98),rgb(200, 64, 64)); */
+    background: #AFEEEE;
+    border-radius:20px;
+    margin-top:50px;
+  }
+  
+  .btn-danger10{
+    background: linear-gradient(to right,rgb(81, 222, 0),rgb(0, 255, 123));
+    border: 1px solid black;
+    color:black;
+  }
+  
+  .col {
+    text-align:center;
+  }
+  
+  
+  .my-display-now {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    margin-left:50px;
+    grid-gap: 90px;
+    margin-top:30px;
+  }
+  
+  .my-display-now .grid img {
+    height:100%;
+  }
+  
+  
+  .btn-danger {
+    border: 1px solid black;
+    margin-left:30px;
+    background: linear-gradient(to right,white,gray);
+  }
+  
+  .offset-10000 {
+    /* border: 1px solid black; */
+    /* margin-left:300px; */
+    padding-left:410px;
+    padding-top:30px;
+  }
+  
+  @media(max-width:1280px) {
+  
+    .description {
+      width:1100px;
+    }
+  
+  
+  }
+  
+  @media(max-width:1144px) {
+  
+    .growthy {
+      margin-left:60px;
+    }
+  
+    .description {
+      margin-left:60px;
+      width:950px;
+    }
+  }
+  
+  @media(max-width:750px) {
+  
+    .growthy {
+      font-size:190%;
+    }
+  
+    .description {
+      font-size:140%;
+      margin-left:60px;
+      width:950px;
+    }
+  
+    .my-display-now {
+      width:730px;
+    }
+  
+    .quest-id-card {
+      width:960px;
+    }
+  
+    .quest-id-card strong,
+    .quest-id-card .col {
+      font-size:130%;
+      /* border: 1px solid black; */
+    }
+  
+    .btn-danger10 {
+      font-size:120%;
+      margin-left: 490px;
+    }
+  
+    .btn-danger {
+      font-size:120%;
+    }
+  
+  }
+  
