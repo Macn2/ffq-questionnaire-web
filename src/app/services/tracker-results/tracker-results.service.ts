@@ -3,26 +3,31 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TrackerResultsResponse } from 'src/app/models/trackerresultsresponse';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TrackerResultsService {
 
-  endpoint = 'http://localhost:9090/ffq';
-
-  constructor(private http: HttpClient) { }
+  endpoint = environment.foodServiceUrl + '/ffq';
+  public trackerResult: TrackerResultsResponse
+  constructor(private http: HttpClient,
+               ) { }
 
   getAllResults(): Observable<TrackerResultsResponse[]> {
     return this.http.get(this.endpoint + '/tracker/all').pipe(
       map((res: any) => {
         return res.map(item => {
-          return new TrackerResultsResponse(
+          this.trackerResult = new TrackerResultsResponse(
             item.userId,
             item.age,
             item.date,
             item.responses
           );
+          // Goal is not apart of the contructor of a tracker result response object so set them after creating
+          this.trackerResult.goal = item.goal;
+          return this.trackerResult
         });
       }));
   }
@@ -31,12 +36,16 @@ export class TrackerResultsService {
     return this.http.get(this.endpoint + '/tracker/user/' + userId).pipe(
       map((res: any) => {
         return res.map(item => {
-          return new TrackerResultsResponse(
+            this.trackerResult = new TrackerResultsResponse(
             item.userId,
             item.age,
             item.date,
             item.responses
           );
+          // ID and goal are not apart of the contructor of a tracker result response object so set them after creating
+          this.trackerResult._id = item.id;
+          this.trackerResult.goal = item.goal;
+          return this.trackerResult;
         });
       }));
   }

@@ -1,0 +1,119 @@
+.title {
+  padding: 10px;
+  /* needed styles below */
+  display: flex;
+  justify-content: space-between;
+}
+
+#qb-container {
+  width: 100%;
+}
+
+/* CHART UPDATE 3 (STARTS HERE): Change #chart-line to #combo-line-area to match CHART UPDATE 1 in html file */
+#chart-line {
+  height: 100%;
+  width: 100%;
+  margin: auto;
+}
+/* CHART UPDATE 3 (ENDS HERE) */
+
+/* CHART UPDATE 4 (STARTS HERE): Change .ngx-charts to .apx-chart to match CHART UPDATE 2 in html file */
+.ngx-charts {
+  height: 100%;
+  width: 100%;
+}
+/* CHART UPDATE 4 (ENDS HERE) */
+
+.chart-options {
+  width: 75%;
+}
+
+#child-personal-information-form {
+  min-width: 150px;
+  max-width: 160px;
+
+  padding: auto;
+}
+
+#child-body-measurements-form {
+  min-width: 20%;
+  max-width: 30%;
+}
+
+:host {
+  height: 100%;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.chart-container {
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 5% auto;
+}
+
+.chart-title {
+  text-align: center;
+}
+
+.example-margin {
+  margin: 0 10px;
+}
+.spinner {
+  width: 100%;
+  margin: auto;
+}
+
+table {
+  font-family: Arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+thead {
+  background-color: #f2f2f2;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+th {
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+.message-box {
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.green {
+  background-color: #b4e8b4;
+  color: #006400;
+}
+
+.red {
+  background-color: #ffcfcf;
+  color: #8b0000;
+}
+
+.yellow {
+  background-color: #fff2cc;
+  color: #9f6000;
+}

@@ -4,12 +4,12 @@
   This is the edit user page for the clinician portal (clinic/user).
   From here, the clinician can edit parents/clinicians that are assigned to the clinic.
   Parents can also be assigned to an existing clinician here.
-  
+
 */
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogPopupComponent } from 'src/app/components/error-dialog-popup/error-dialog-popup.component';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule, NgForm } from '@angular/forms';
 import { ParentService } from 'src/app/services/parent/parent-service';
@@ -23,13 +23,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DeletePopupComponent } from "src/app/components/delete-popup/delete-popup.component";
 
 @Component({
-  selector: 'app-fooditem',
+  selector: 'app-new-clinic',
   templateUrl: './clinic-user.component.html',
   styleUrls: ['./clinic-user.component.css']
 })
 export class ClinicUserComponent implements OnInit {
 
-  userAttributes: object;
+  userAttributes: FFQClinician | FFQParent;
   public ffqclinicianList: FFQClinician[] = [];
   clinicianNames: string[] = [];
 
@@ -58,10 +58,9 @@ export class ClinicUserComponent implements OnInit {
 
     this.clinicianNames.push("");
 
-    var clinicianList: Observable<FFQClinicianResponse[]> = this.clinicianService.getAllClinicians();
+    const clinicianList: Observable<FFQClinicianResponse[]> = this.clinicianService.getAllClinicians();
     clinicianList.subscribe(a => {
       this.ffqclinicianList = a;
-      console.log(a);
       for (let i = 0; i < a.length; i++) {
         this.clinicianNames.push(a[i].abbreviation + " " + a[i].firstname + " " + a[i].lastname);
       }
@@ -80,8 +79,6 @@ export class ClinicUserComponent implements OnInit {
       this.isClinician = true;
       this.getClinicianByID(UserID);
     }
-
-    //console.log(this.userAttributes);
   }
 
   getParentByID(id: string)
@@ -114,7 +111,6 @@ export class ClinicUserComponent implements OnInit {
 
   updateParent()
   {
-    console.log(this.userAttributes);
     this.parentService.updateParent(<FFQParentResponse>this.userAttributes).subscribe(
      data => {this.router.navigateByUrl('/clinic/home');
      const dialogRef = this.errorDialog.open(ErrorDialogPopupComponent);
@@ -125,7 +121,6 @@ export class ClinicUserComponent implements OnInit {
 
   updateClinician()
   {
-    console.log(this.userAttributes);
     this.clinicianService.updateClinician(<FFQClinicianResponse>this.userAttributes).subscribe(
      data => {this.router.navigateByUrl('/clinic/home');
      const dialogRef = this.errorDialog.open(ErrorDialogPopupComponent);
@@ -158,5 +153,9 @@ export class ClinicUserComponent implements OnInit {
     const confirmDelete = this.modalService.open(DeletePopupComponent);
     confirmDelete.componentInstance.service = "Clinician";
     confirmDelete.componentInstance.attributes = this.userAttributes;
+  }
+
+  generatePassword() {
+    this.userAttributes.userpassword = Math.random().toString(36).slice(-10);
   }
 }
