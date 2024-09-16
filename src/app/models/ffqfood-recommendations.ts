@@ -2,14 +2,12 @@
 
 export class FFQFoodRecommendations {
     questionnaireId: string;
-    patientName: string;
     patientAge: number;
     foodCategoryRecList: Recommendation[];
 
 
-    constructor(questionnaireId: string, patientName: string, patientAge: number, foodCategoryRecList: Recommendation[]) {
+    constructor(questionnaireId: string, patientAge: number, foodCategoryRecList: Recommendation[]) {
       this.questionnaireId = questionnaireId;
-      this.patientName = patientName;
       this.patientAge = patientAge;
       this.foodCategoryRecList = foodCategoryRecList;
     }

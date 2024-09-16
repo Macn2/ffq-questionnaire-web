@@ -6,10 +6,16 @@
         <mat-card-content class="card-body">
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
+                    <mat-error *ngIf="submitted && loginForm.get('username').hasError('required')">Username is required</mat-error>
                     <input type="text" formControlName="username" placeholder="Username" class="form-control" [(ngModel)]="username"/>
                 </div>
                 <div class="form-group">
+                    <mat-error *ngIf="submitted && loginForm.get('password').hasError('required')">Password is required</mat-error>
                     <input type="password" formControlName="password" placeholder="Password" class="form-control" [(ngModel)]="password"/>
+                </div>
+                <div class="form-group">
+                  <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+                  <mat-error *ngIf="error">{{error}}</mat-error>
                 </div>
                 <!--
                     <div class="form-group">

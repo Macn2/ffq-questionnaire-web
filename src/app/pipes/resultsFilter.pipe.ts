@@ -26,12 +26,10 @@ export class ResultsPipe implements PipeTransform {
       return list;
     }
     return list.filter(function(result){
-      var patientName = result.ffqresult.patientName;
       var questId = result.ffqresult.questionnaireId;
       var parentName = resultMap.get(result.ffqresult.userId).parentName;
 
-      return patientName.toLowerCase().includes(term.toLowerCase())
-      || questId.toLowerCase().includes(term.toLowerCase())
+      return questId.toLowerCase().includes(term.toLowerCase())
       || parentName.toLowerCase().includes(term.toLowerCase());
     });
   }

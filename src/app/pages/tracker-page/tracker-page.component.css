@@ -24,7 +24,7 @@ h2 {
 }
 
 .tracker-container {
-  padding-top: 140px;
+  padding-top: 200px;
   margin-bottom: 50px;
 }
 
@@ -60,7 +60,7 @@ mat-button-toggle-group {
   background-color: #6880EE;
 } */
 
-.top{
+/*.top{
   color: #d96459;
 }
 
@@ -70,4 +70,4 @@ mat-button-toggle-group {
 
 .bot{
   color: #ffcc5c;
-}
+}*/

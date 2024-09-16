@@ -15,7 +15,8 @@
     </div>
       <div *ngFor="let result of resultInfo | trackerFilter: resultMap: search ; let i = index" class="trackeritem-container">
         <mat-card class="tracker-card">
-        <div><label><strong>{{ result.parentName }} - {{result.ffqtracker.date}} - {{result.ffqtracker.age}} Months Old</strong></label></div>
+        <!--<div><label><strong>{{ result.parentName }} - {{result.ffqtracker.date}} - {{result.ffqtracker.age}} Months Old</strong></label></div>-->
+        <div><label><strong>{{result.ffqtracker.date}} - {{result.ffqtracker.age}} Months Old</strong></label></div>
         <div style="float: left">
           <tr *ngFor="let item of result.ffqtracker.responses">{{item.food}}</tr>
         </div>

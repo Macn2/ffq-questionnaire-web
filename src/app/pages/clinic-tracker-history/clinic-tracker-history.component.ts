@@ -6,17 +6,16 @@
 
 */
 
-import { Component, OnInit } from '@angular/core';
-import { TrackerResultsResponse } from 'src/app/models/trackerresultsresponse';
-import { TrackerResultsService } from 'src/app/services/tracker-results/tracker-results.service';
-import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import { TrackerItems } from 'src/app/models/trackeritems';
-import { Observable, of } from 'rxjs';
-import { FFQParentResponse } from 'src/app/models/ffqparent-response';
-import { ParentService } from 'src/app/services/parent/parent-service';
-import { FFQClinicResponse } from 'src/app/models/ffqclinic-response';
-import { ClinicService } from 'src/app/services/clinic/clinic-service';
-import { TrackerParentResultsResponse } from 'src/app/models/ffqparentresulttracker';
+import {Component, OnInit} from '@angular/core';
+import {TrackerResultsResponse} from 'src/app/models/trackerresultsresponse';
+import {TrackerResultsService} from 'src/app/services/tracker-results/tracker-results.service';
+import {AuthenticationService} from 'src/app/services/authentication/authentication.service';
+import {Observable, of} from 'rxjs';
+import {FFQParentResponse} from 'src/app/models/ffqparent-response';
+import {ParentService} from 'src/app/services/parent/parent-service';
+import {FFQClinicResponse} from 'src/app/models/ffqclinic-response';
+import {ClinicService} from 'src/app/services/clinic/clinic-service';
+import {TrackerParentResultsResponse} from 'src/app/models/ffqparentresulttracker';
 
 @Component({
   templateUrl: './clinic-tracker-history.component.html',
@@ -38,17 +37,16 @@ export class ClinicTrackerHistoryComponent implements OnInit {
               private authenticationService: AuthenticationService,
               public parentService: ParentService,
               public clinicService: ClinicService
-              ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.getClinicId();
-
-
   }
 
 
-    //loadData function serves to store the tracker history and parent names into the FFQTrackerParentResultsResponse object
-    //                  serves to display the tracker history
+  //loadData function serves to store the tracker history and parent names into the FFQTrackerParentResultsResponse object
+  //                  serves to display the tracker history
   private loadData() {
 
     const trackerObservable: Observable<TrackerResultsResponse[]> = of(this.trackerList);
@@ -57,84 +55,68 @@ export class ClinicTrackerHistoryComponent implements OnInit {
       this.trackerList = this.trackerList.reverse();
       this.parentNames = this.parentNames.reverse();
 
-      /*console.log("this.results")
-      console.log(this.trackerList)
-      console.log("this.parentNames")
-      console.log(this.parentNames)*/
-      for(var i = 0; i < this.trackerList.length; i++){
-         var object: TrackerParentResultsResponse = new TrackerParentResultsResponse(
-           this.trackerList[i],
-           this.parentNames[i]
-         );
+      for (var i = 0; i < this.trackerList.length; i++) {
+        var object: TrackerParentResultsResponse = new TrackerParentResultsResponse(
+          this.trackerList[i],
+          this.parentNames[i]
+        );
 
-         this.resultInfo.push(object);
-         this.resultMap.set(this.trackerList[i].userId, object);
-       }
-       //console.log("result Info ")
-       //console.log(this.resultInfo)
+        this.resultInfo.push(object);
+        this.resultMap.set(this.trackerList[i].userId, object);
+      }
     });
 
   };
 
 
-    //Function to get all the results for each parent
-  private getAllResults(){
+  //Function to get all the results for each parent
+  private getAllResults() {
 
     const allTrackersObservable = this.trackerResultsService.getAllResults();
     allTrackersObservable.subscribe(allTrackers => {
-      //console.log("all tracker")
-      //console.log(allTrackers)
-        this.parentList.forEach(parent => {
-            allTrackers.forEach(tracker => {
-                if(tracker.userId == parent.userId){
-                  this.trackerList.push(tracker);
-                  var parentName = parent.firstname + " " + parent.lastname;
-                  this.parentNames.push(parentName);
-                }
-            });
+      this.parentList.forEach(parent => {
+        allTrackers.forEach(tracker => {
+          if (tracker.userId == parent.userId) {
+            this.trackerList.push(tracker);
+            var parentName = parent.firstname + " " + parent.lastname;
+            this.parentNames.push(parentName);
+          }
         });
-        //console.log("trackerList in getTrackersfunction")
-        //console.log(this.trackerList)
-        this.loadData();
-
+      });
+      this.loadData();
     });
 
   }
 
-     //Function used to obtain the clinicId for the currently logged in clinician, in order to later display results based only for this specific clinic
-  private getClinicId(){
+  //Function used to obtain the clinicId for the currently logged in clinician,
+  // in order to later display results based only for this specific clinic
+  private getClinicId() {
 
     var clinicListObervable: Observable<FFQClinicResponse[]> = this.clinicService.getAllClinics();
     const loggedInUser = this.authenticationService.currentUserValue;
     var clinicId: string;
 
-    //console.log("Logged in user clinic: " + loggedInUser[0].assignedclinic);
     clinicListObervable.subscribe(clinicList => {
       var clinic = clinicList.find(a => a.clinicId == loggedInUser[0].assignedclinic);
-      if(clinic){
+      if (clinic) {
         this.clinicId = clinic.clinicId;
-        //console.log("clinic ID in function");
-        //console.log(this.clinicId);
       }
       this.getParents();
     });
 
   }
 
-    //Function used to filter the parent list to hold only the parents that are assigned to that specific clinic
-  getParents()
-  {
+  //Function used to filter the parent list to hold only the parents that are assigned to that specific clinic
+  getParents() {
     var parentListObservable: Observable<FFQParentResponse[]> = this.parentService.getAllParents();
 
     parentListObservable.subscribe(parentList => {
       parentList.forEach(parent => {
-        if(parent.assignedclinic == this.clinicId){
+        if (parent.assignedclinic == this.clinicId) {
 
           this.parentList.push(parent);
         }
       });
-      //console.log("parentList in function");
-      //console.log(this.parentList);
       this.getAllResults();
     });
   }

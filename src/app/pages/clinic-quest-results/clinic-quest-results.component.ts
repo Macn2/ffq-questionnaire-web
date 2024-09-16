@@ -8,6 +8,7 @@
 */
 
 import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ResultsService } from "src/app/services/results/results";
 import { FFQResultsResponse } from "src/app/models/ffqresultsresponse";
 import { Observable } from 'rxjs';
@@ -21,6 +22,16 @@ import { FFQParent } from 'src/app/models/ffqparent';
 import { of } from 'rxjs';
 import { ResultsPipe } from 'src/app/pipes/resultsFilter.pipe';
 import { FFQParentResult } from 'src/app/models/ffqparentresult';
+// ////
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RecommendModalComponent } from 'src/app/components/recommend-modal/recommend-modal.component';
+import { MatDialog } from '@angular/material/dialog';
+import { NutrientsRecommendationsService } from 'src/app/services/nutrients-recommendations/nutrients-recommendations.service';
+import { ErrorDialogPopupComponent } from 'src/app/components/error-dialog-popup/error-dialog-popup.component';
+import { Router } from '@angular/router';
+import { FoodRecommendModalComponent } from 'src/app/components/food-recommend-modal/food-recommend-modal.component';
+import { FoodRecommendationsService } from 'src/app/services/food-recommendation-service/food-recommendations.service';
+import { QuestionnaireValidatorService } from '../../services/questionnaire-validator/questionnaire-validator.service';
 
 @Component({
   selector: "app-quest-results",
@@ -29,6 +40,10 @@ import { FFQParentResult } from 'src/app/models/ffqparentresult';
 })
 export class ClinicQuestResultsComponent implements OnInit {
   public show: boolean = false;
+  public showFeedback: boolean = false;
+  feedbackForm: FormGroup;
+  loading = false;
+  submitted = false;
   search: string;
 
 
@@ -41,15 +56,26 @@ export class ClinicQuestResultsComponent implements OnInit {
   parentNames: string[] = [];
   resultMap: Map<string, FFQParentResult> = new Map<string, FFQParentResult>();
   resultInfo: FFQParentResult[] = [];
+//
 
   constructor(
     public resultsService: ResultsService,
     public clinicService: ClinicService,
     public parentService: ParentService,
-    public authenticationService: AuthenticationService
-    ) {}
+    public authenticationService: AuthenticationService,
+    public questService: QuestionnaireValidatorService,
+    //
+    public nutrientsRecommendationsService: NutrientsRecommendationsService,
+    public foodRecommendationsService: FoodRecommendationsService,
+    private errorDialog: MatDialog,
+    private formBuilder: FormBuilder,
+    private router: Router,) {}
 
   ngOnInit() {
+    this.feedbackForm = this.formBuilder.group({
+      feedback: ['', Validators.required]
+    });
+
     this.getClinicId();
   }
 
@@ -82,7 +108,6 @@ export class ClinicQuestResultsComponent implements OnInit {
       element.dailyAverages = newDailyMap;
       })
 
-      console.log(m);
       this.results = m.reverse();
       this.parentNames = this.parentNames.reverse();
       for(var i = 0; i < this.parentNames.length; i++){
@@ -93,28 +118,35 @@ export class ClinicQuestResultsComponent implements OnInit {
         this.resultInfo.push(object);
         this.resultMap.set(this.results[i].userId, object);
       }
-      console.log("resultInfo in function");
-      console.log(this.resultInfo);
-      
-     });
+      });
 
   }
 
-    //Function used to obtain the clinicId for the currently logged in clinician, in order to later display results based only for this specific clinic
+  // convenience getter for easy access to form fields
+  get f() { return this.feedbackForm.controls; }
+
+  submitFeedback(qId) {
+    if (this.feedbackForm.invalid) {
+        return;
+    }
+
+    this.loading = true;
+    this.resultsService.submitFeedback(qId, this.f.feedback.value).subscribe((data: null) => {
+      });
+  }
+
+  //Function used to obtain the clinicId for the currently logged in clinician, in order to later display results based only for this specific clinic
   private getClinicId(){
 
     var clinicListObervable: Observable<FFQClinicResponse[]> = this.clinicService.getAllClinics();
     const loggedInUser = this.authenticationService.currentUserValue;
     var clinicId: string;
 
-    console.log("Logged in user clinic: " + loggedInUser[0].assignedclinic);
     clinicListObervable.subscribe(clinicList => {
       var clinic = clinicList.find(a => a.clinicId == loggedInUser[0].assignedclinic);
       if(clinic){
         this.clinicId = clinic.clinicId;
         this.currentClinicName = clinic.clinicname;
-        console.log("clinic ID in function");
-        console.log(this.clinicId);
       }
       this.getParentList();
     });
@@ -133,21 +165,15 @@ private getParentList(){
      })
      this.getResultsList();
 
-     console.log(this.parentList);
   });
 }
 
 
   //Function to get all the results for each parent
 private getResultsList(){
-   //console.log("Parents in Get result");
-   //console.log(this.parentList);
-   
    var allResultsObservable: Observable<FFQResultsResponse[]> = this.resultsService.getAllResults();
    allResultsObservable.subscribe((allResults: FFQResultsResponse[]) => {
-    //console.log("All REsults in function");
-    //console.log(allResults);
-      this.parentList.forEach(parent => { 
+      this.parentList.forEach(parent => {
           allResults.forEach(result => {
               if(result.userId == parent.userId){
                 this.resultList.push(result);
@@ -155,16 +181,12 @@ private getResultsList(){
                 this.parentNames.push(parentName);
               }
           });
-          //console.log("parentNames for this parent")
-          //console.log(this.parentNames);
       });
-      //console.log("results in function");
-      //console.log(this.resultList);
       this.loadData();
    });
 
  }
- 
+
   private returnZero(){
     return 0;
   }
@@ -173,4 +195,55 @@ private getResultsList(){
   toggle(index) {
     this.resultInfo[index].ffqresult.show = !this.resultInfo[index].ffqresult.show;
   }
+
+  toggleFeedback(index) {
+    //ffqfeedback
+    this.resultInfo[index].ffqresult.showFeedback = !this.resultInfo[index].ffqresult.showFeedback;
+  }
+
+  /////////////////////////////////////////////////////////////////////////////////
+  // (Francis) Same as quest-results.component.ts
+  //            copy/pasted from clinic-recommend.component.ts
+  /////////////////////////////////////////////////////////////////////////////////
+
+  private getNutrientsRecommendations(questionnaireId: string) {
+    this.nutrientsRecommendationsService.getNutrientsRecommendationsByQuestionnaireId(questionnaireId).subscribe(
+      data => {
+        this.onModalRequest(questionnaireId);
+      },
+      error => {
+        const dialogRef = this.errorDialog.open(ErrorDialogPopupComponent);
+        dialogRef.componentInstance.title = error.error.message;
+        dialogRef.componentInstance.router = this.router;
+      }
+    );
+  }
+
+  private getFoodRecommendations(questionnaireId: string) {
+    this.foodRecommendationsService.getFoodRecommendationsByQuestionnaireId(questionnaireId).subscribe(
+      data => {
+        this.onModalRequestFood(questionnaireId);
+      },
+      error => {
+        const dialogRef = this.errorDialog.open(ErrorDialogPopupComponent);
+        dialogRef.componentInstance.title = error.error.message;
+        dialogRef.componentInstance.router = this.router;
+      }
+    );
+  }
+
+
+    //functions used in HTML to display the nutrient recommendation after clicking on the button
+  onModalRequest(id: string): void {
+    const modalRef = this.errorDialog.open(RecommendModalComponent);
+    modalRef.componentInstance.id = id;
+  }
+
+    //functions used in HTML to display the food recommendation after clicking on the button
+  onModalRequestFood(id: string): void {
+    const modalRef = this.errorDialog.open(FoodRecommendModalComponent);
+    modalRef.componentInstance.id = id;
+  }
+
+
 }

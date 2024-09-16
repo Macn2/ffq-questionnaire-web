@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FoodItemService } from '../../services/food-item/food-item.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -63,10 +63,10 @@ export class FooditemComponent implements OnInit {
     const FoodItemObjectId = this.route.snapshot.paramMap.get('id');
 
     if (FoodItemObjectId == "new"){
-      
+
       this.isNew = true;
 
-      this.ffqfoditem = new FFQFoodItem("");
+      this.ffqfoditem = new FFQFoodItem("", 0);
       this.ffqnutrientlist.push(new FFQNutrientlist("", new nutrientMap("","")));
       //this.ffqnutrientlist.nutrientListID = "test";
 
@@ -76,11 +76,8 @@ export class FooditemComponent implements OnInit {
         //this.ffqnutrientlist.nutrientMap.set(nutrient,0);
       //}
 
-      //console.log(this.ffqnutrientlist.nutrientMap);
-      this.foodNutrients = new FFQFoodNutrients(this.ffqfoditem, this.ffqnutrientlist);
+      //this.foodNutrients = new FFQFoodNutrients(this.ffqfoditem, this.ffqnutrientlist);
       //this.ffqfoodnutrients = FFQFoodNutrients.foodItemFromResponse(this.foodNutrientsResponse);
-      console.log(this.foodNutrients);
-
       this.foodNutrientsItem.push(this.foodNutrients);
       this.dataLoaded = Promise.resolve(true);
 
@@ -89,35 +86,30 @@ export class FooditemComponent implements OnInit {
       this.isUpdate = true;
       this.getFoodByObjectId(FoodItemObjectId);
 
-      console.log(this.foodNutrientsItem);
-    }
+      }
   }
 
   private getFoodByObjectId(name: string) {
 
     // retrieve the food item
     this.foodService.getFoodbyName(name).subscribe(data => {
-      
+
       //retrieve the nutrients lists for each food item's food type
       for (let i of data.foodItem.foodTypes) {
-        
+
         this.nutrientsService.getNutrientsById(i.nutrientListID).subscribe(nutrientList => {
 
           this.nutrientsMap.set(i.nutrientListID, nutrientList.nutrientMap);
-        });        
+        });
       }
-      
-      console.log(this.nutrientsMap);
-      
-      
+
       this.foodNutrientsItem.push(FFQFoodNutrients.foodItemFromResponse(data))
     });
     this.dataLoaded = Promise.resolve(true);
   }
 
-  private addFoodNutrients(form:NgForm){  
-    
-    console.log(this.foodNutrientsItem[0]);
+  private addFoodNutrients(form:NgForm){
+
     //this.foodNutrientsItem[0].nutrientList.nutrientListID = this.foodNutrientsItem[0].foodItem.foodTypes[0].nutrientListID;
     //this.foodNutrientsItem[0].foodItem.nutrientId = this.foodNutrientsItem[0].foodItem.foodTypes[0].nutrientListID;
      this.foodService.addFoodNutrients(FFQFoodNutrients.foodItemToResponse(this.foodNutrientsItem[0])).subscribe(
@@ -129,23 +121,22 @@ export class FooditemComponent implements OnInit {
       const dialogRef = this.errorDialog.open(ErrorDialogPopupComponent);
       dialogRef.componentInstance.title = error.error.message;
     }
-     
+
     );
-    
+
   }
 
-  private updateFoodNutrients(){  
-    console.log(this.foodNutrientsItem[0]);
+  private updateFoodNutrients(){
     //this.foodNutrientsItem[0].nutrientList.nutrientListID = this.foodNutrientsItem[0].foodItem.foodTypes[0].nutrientListID;
     //this.foodNutrientsItem[0].foodItem.nutrientId = this.foodNutrientsItem[0].foodItem.foodTypes[0].nutrientListID;
     this.foodService.updateFoodNutrients(FFQFoodNutrients.foodItemToResponse(this.foodNutrientsItem[0])).subscribe(
      data => {this.router.navigateByUrl('/admin/home');
      const dialogRef = this.errorDialog.open(ErrorDialogPopupComponent);
      dialogRef.componentInstance.title = 'Food item successfully updated!';}
-     
+
     );
-    
-    
+
+
   }
 
   trackByFn(item, id){
@@ -162,7 +153,7 @@ export class FoodNutrientsMap {
     this.nutrientListID = "";
   }
 
- 
+
 }
 
 
