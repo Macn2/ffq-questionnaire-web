@@ -32,6 +32,22 @@
 }
 
 mat-error {
-  font-size: small;
+  font-size:  x-large;
+   background-color: yellow;
 }
+
+@media (max-width: 500px) {
+  .qb-card {
+     width: 100%;
+  }
+  .qb-card {
+    font-size: smaller;
+  }
+  .qb-radio-group {
+    padding-top: 10px;
+    width: 100%;
+    display: block;
+  }
+}
+
 

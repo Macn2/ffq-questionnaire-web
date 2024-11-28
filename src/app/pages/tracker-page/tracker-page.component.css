@@ -24,7 +24,7 @@ h2 {
 }
 
 .tracker-container {
-  padding-top: 140px;
+  padding-top: 200px;
   margin-bottom: 50px;
 }
 
@@ -56,11 +56,27 @@ mat-button-toggle-group {
   width: 50px;
 }
 
+.lang-button-div {
+  text-align: center; 
+}
+
+.lang-button {
+  background-color: #35a2a6;
+  top: 10px;
+  color: white;
+}
+
+@media (max-width: 500px) {
+  .tracker-card {
+    width: 90%;
+  } 
+}
+
 /* .mat-button-toggle-checked {
   background-color: #6880EE;
 } */
 
-.top{
+/*.top{
   color: #d96459;
 }
 
@@ -70,4 +86,4 @@ mat-button-toggle-group {
 
 .bot{
   color: #ffcc5c;
-}
+}*/
