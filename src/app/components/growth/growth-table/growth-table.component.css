@@ -1,0 +1,42 @@
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 16px;
+  margin-bottom: 32px;
+}
+
+td,
+th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+tr:nth-child(even) {
+  background-color: #eee;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+.empty-table-message {
+  width: 100%;
+  padding: 8px;
+  background-color: white;
+  border: 1px solid #ddd;
+  text-align: center;
+  color: #888
+}
+
+.percentile-td {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.percentile-indicator {
+  width: 16px;
+  height: 16px;
+  border-radius: 99px;
+}

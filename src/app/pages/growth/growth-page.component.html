@@ -1,0 +1,26 @@
+<app-parental-header></app-parental-header>
+
+<div class="page-container">
+  <section class="page-content">
+    <button
+      (click)="toggleLanguage()"
+      mat-raised-button
+      class="lang-button-top"
+    >
+      {{ "For English" | translate }}
+    </button>
+    <div class="chart-container">
+      <app-growth-chart></app-growth-chart>
+    </div>
+    <div class="right-side-container">
+      <button (click)="toggleLanguage()" mat-raised-button class="lang-button">
+        {{ "For English" | translate }}
+      </button>
+      <growth-new-record-form></growth-new-record-form>
+    </div>
+  </section>
+  <section class="information-section">
+    <app-growth-message></app-growth-message>
+    <app-growth-table></app-growth-table>
+  </section>
+</div>

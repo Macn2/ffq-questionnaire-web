@@ -1,0 +1,23 @@
+<researchparental-header></researchparental-header>
+
+<div class="page-container">
+  <section class="page-content">
+    <button
+      (click)="toggleLanguage()"
+      mat-raised-button
+      class="lang-button-top"
+    >
+      {{ "For English" | translate }}
+    </button>
+    <div class="left-side-container">
+      <app-growth-table [hidePercentile]="true"></app-growth-table>
+    </div>
+
+    <div class="right-side-container">
+      <button (click)="toggleLanguage()" mat-raised-button class="lang-button">
+        {{ "For English" | translate }}
+      </button>
+      <growth-new-record-form [isParticipant]="true"></growth-new-record-form>
+    </div>
+  </section>
+</div>

@@ -2,25 +2,45 @@
   display: flex;
   justify-content: center;
   /* padding-top: 10%; */
-  padding-top: 140px;
+  padding-top: 200px;
 }
 .quest-id-card {
   width: 60%;
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-content: center;
-  padding: 50px;
-  height: 200px;
+  padding: 10px;
+  height: 300px;
 }
 .quest-id-input {
   padding-right: 30px;
 }
+
 .quest-id-button {
-  padding-left: 30px;
+  font-size: 1.5em;
+  padding:15px 30px;
+  /*padding-left: 85px;*/
 }
-.quest-id-span {
-  display: inline-flex;
+.quest-id-reference {
+  padding-top: 20px;
 }
 .quest-id-textfield {
   font-size: large;
+}
+
+.lang-button {
+  background-color: #35a2a6;
+  color: white;
+}
+
+.button-div {
+  margin-top: 16px;
+  text-align: center;
+}
+
+@media(max-width:693px) {
+  .quest-id-card {
+    margin-top:100px;
+  }
 }

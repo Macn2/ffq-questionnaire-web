@@ -13,3 +13,11 @@ body {
   align-content: center;
   justify-items: center;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.app-root {
+  display: block;
+  width: 100%;
+}

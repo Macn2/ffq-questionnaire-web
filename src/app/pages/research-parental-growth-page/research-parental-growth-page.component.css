@@ -1,0 +1,47 @@
+.page-container {
+  width: 100%;
+  max-width: 1200px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 16px;
+  padding-top: 160px;
+}
+.page-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  @media (min-width: 900px) {
+    flex-direction: row;
+  }
+  .lang-button-top {
+    width: 100%;
+    @media (min-width: 900px) {
+      display: none;
+    }
+  }
+}
+.left-side-container {
+  width: 100%;
+  @media (min-width: 900px) {
+    width: 70%;
+  }
+}
+.right-side-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  @media (min-width: 900px) {
+    width: 30%;
+  }
+  .lang-button {
+    display: none;
+    width: 100%;
+    @media (min-width: 900px) {
+      display: block;
+      flex: 1;
+    }
+  }
+}

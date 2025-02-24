@@ -1,0 +1,19 @@
+<title *ngIf="title">{{ title }}</title>
+<title *ngIf="!title">{{ "PARTICIPANTPORTAL.TITLE" | translate }}</title>
+
+<div class="header">
+
+  <h2 matDialogTitle *ngIf="title">{{ title }}</h2>
+  <h2 matDialogTitle *ngIf="!title">{{ "PARTICIPANTPORTAL.TITLE" | translate }}</h2>
+  <div align="center">
+    <i> <img src="assets/images/logo.png" alt="" height="80" width="80" /> </i>
+  </div>
+  <div class="login-button">
+    <button mat-raised-button (click)="logout()">
+      {{ "Log out" | translate
+      }}<i class="fa fa-sign-out" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <button onclick="history.back()" class="mybuttons">Home</button>
+</div>

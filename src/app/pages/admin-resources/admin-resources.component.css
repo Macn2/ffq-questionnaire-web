@@ -1,0 +1,62 @@
+.page-container {
+  width: 100%;
+  max-width: 1200px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 16px;
+  padding-top: 182px;
+  @media (min-width: 693px) {
+    padding-top: 164px;
+  }
+}
+.page-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.header {
+  margin-top: 32px;
+  display: flex;
+  justify-content: space-between;
+}
+.header-title {
+  font-size: 24px;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 16px;
+  margin-bottom: 32px;
+}
+
+td,
+th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+tr:nth-child(even) {
+  background-color: #eee;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+.empty-table-message {
+  width: 100%;
+  padding: 8px;
+  background-color: white;
+  border: 1px solid #ddd;
+  text-align: center;
+  color: #888
+}
+.export-button {
+  margin-right: 8px;
+  background-color:#c82333;
+  color: white;
+}

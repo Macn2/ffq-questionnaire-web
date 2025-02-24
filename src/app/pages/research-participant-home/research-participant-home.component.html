@@ -1,0 +1,55 @@
+<researchparental-header [title]="viewConfiguration?.homeTitle"></researchparental-header>
+
+<div class="home-container">
+  <div class="home-component-container">
+    <div class="home-container">
+      <div class="homeitem-2-container">
+        <div class="homeitem-container" id="firstitem">
+          <a routerLink="/participant/questionnaire">
+            <h1>{{ "Food questionnaire" | translate }}</h1>
+
+            <div class="homeitem-content">
+              <p>
+                {{
+                  "Complete this questionnaire to learn if you are feeding your child the recommended amounts for each food group."
+                    | translate
+                }}
+              </p>
+              <div class="homeitem-svg">
+                <img
+                  class="center"
+                  src="assets/images/Questionnaire_Icon.png"
+                  height="60"
+                  width="60"
+                />
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="homeitem-container" id="secondItem" *ngIf="!viewConfiguration?.hideGrowthCharts">
+          <a routerLink="/participant/research-parental-chart">
+            <h1>{{ "Growth Charts" | translate }}</h1>
+            <div class="homeitem-content">
+              <p>
+                {{
+                  "Click here to input the weight and length of your child from the
+              last visit to the pediatric office to monitor his/her growth."
+                    | translate
+                }}
+              </p>
+              <div class="homeitem-svg">
+                <img
+                  class="center"
+                  src="assets/images/Chart_Growth_Icon.png"
+                  height="60"
+                  width="60"
+                />
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<admin-header></admin-header>
+
+<div class="page-container">
+  <section class="header">
+    <h1 class="header-title">{{ "Educational Resources Events" | translate }}</h1>
+    <div>
+    <button (click)="exportEvents()" mat-raised-button class="export-button">
+      {{ "Export Data" | translate }}
+    </button>
+    <button (click)="toggleLanguage()" mat-raised-button class="lang-button">
+      {{ "For English" | translate }}
+    </button>
+    </div>
+  </section>
+  <section class="page-content">
+  <table>
+    <thead>
+      <tr>
+        <th>{{ "Date" | translate }}</th>
+        <th>{{ "Parent" | translate }}</th>
+        <th>{{ "Resource" | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let event of events">
+        <td>{{ event.timestamp }}</td>
+        <td>{{ event.parentUsername }}</td>
+        <td><a target="_blank" href={{event.properties.url}}>{{ event.title }}</a></td>
+      </tr>
+      <tr *ngIf="events.length === 0">
+        <td colspan="3" class="empty-table-message">
+          {{ "No data available" | translate }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  </section>
+</div>

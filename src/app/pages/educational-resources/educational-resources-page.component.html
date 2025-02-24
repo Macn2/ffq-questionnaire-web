@@ -1,0 +1,21 @@
+<app-parental-header></app-parental-header>
+
+<div class="page-container">
+  <header class="header">
+    <button (click)="toggleLanguage()" mat-raised-button class="lang-button">
+      {{ "For English" | translate }}
+    </button>
+  </header>
+  <section class="page-content">
+    <div class="category-container" *ngFor="let resource of resources">
+      <mat-card class="home-component-header">
+        <h1>{{ resource.category | translate }}</h1>
+      </mat-card>
+      <mat-card *ngFor="let item of resource.items" class="">
+        <a (click)="handleClick(item, resource.category)" class="home-component-item">
+          <h2>{{ item.text | translate }}</h2>
+        </a>
+      </mat-card>
+    </div>
+  </section>
+</div>

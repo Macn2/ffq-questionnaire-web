@@ -1,0 +1,56 @@
+<clinical-header></clinical-header>
+
+<div class="page-container">
+  <section class="header">
+    <h1 class="header-title">{{ "Growth Charts Results" | translate }}</h1>
+    <div>
+      <button (click)="exportRecords()" mat-raised-button class="export-button">
+        {{ "Export Data" | translate }}
+      </button>
+      <button (click)="toggleLanguage()" mat-raised-button class="lang-button">
+        {{ "For English" | translate }}
+      </button>
+    </div>
+  </section>
+  <table>
+    <thead>
+      <tr>
+        <th>{{ "Date" | translate }}</th>
+        <th>{{ "Participant ID" | translate }}</th>
+        <th>{{ "Age (months)" | translate }}</th>
+        <th>{{ "Gender" | translate }}</th>
+        <th>{{ "Weight (kg)" | translate }}</th>
+        <th>{{ "Length (cm)" | translate }}</th>
+        <th>{{ "Percentile" | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let record of records">
+        <td>{{ record.timestamp }}</td>
+        <td>
+          {{
+            record.userType === "participant"
+              ? record.participantId
+              : record.parentId
+          }}
+        </td>
+        <td>{{ record.age }}</td>
+        <td>{{ record.gender | translate }}</td>
+        <td>{{ record.weight }}</td>
+        <td>{{ record.height }}</td>
+        <td class="percentile-td">
+          <span
+            class="percentile-indicator"
+            [style.background]="record.percentile.color"
+          ></span>
+          {{ record.percentile.percentile }}
+        </td>
+      </tr>
+      <tr *ngIf="records.length === 0">
+        <td colspan="8" class="empty-table-message">
+          {{ "No data available" | translate }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

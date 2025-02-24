@@ -1,0 +1,295 @@
+.home-component-container {
+  padding-top: 160px;
+
+  color: aliceblue;
+
+  align-items: center;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+  align-items: center;
+  margin: auto;
+}
+
+.home-component-container .homeitem-container {
+  background-color: #4d79ff;
+  color: white;
+}
+
+.home-component-container .homeitem-container:hover {
+  background-color: #b2b9e1;
+  color: #2c387e;
+}
+
+.homeitem-container {
+  display: flex;
+  flex-direction: column;
+
+  background-color: #0039e6;
+
+  margin: 0.3em;
+  padding: 1em;
+
+  align-items: center;
+
+  width: 100%;
+}
+
+.homeitem-container h1 {
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.homeitem-container p {
+  /* align-items: left !important; */
+  /* text-align: left; */
+  font-size: 1em;
+}
+
+.homeitem-2-container {
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 1;
+  @media (max-width: 768px) {
+      flex-direction: column;
+  }
+}
+
+.homeitem-content {
+  display: flex;
+  flex-direction: row;
+}
+
+.homeitem-title h1,
+.homeitem-title h2,
+.homeitem-title p {
+  text-align: left;
+  color: aliceblue;
+}
+
+.homeitem-title {
+  padding-left: 20px;
+}
+
+.homeitem-title h1 {
+  font-size: 2em;
+  margin-top: 20px;
+}
+
+.homeitem-title h2 {
+  font-size: 2em;
+  line-height: 0.75em;
+}
+
+.homeitem-title p {
+  font-size: 1em;
+}
+
+.homeitem-svg-title {
+  align-items: center;
+  margin: auto;
+}
+
+.homeitem-svg-title img {
+  align-items: center;
+}
+
+.homeitem-svg {
+  align-items: center;
+  padding: 1em;
+}
+
+.homeitem-svg img {
+  align-items: center;
+}
+
+.home-component-container a {
+  color: white;
+}
+
+@media (max-width: 450px) {
+  .home-component-container {
+    /* width:75%;
+        height:75%; */
+    padding-top: 200px;
+    /* border: 1px solid blue; */
+  }
+
+  #firstitem,
+  #seconditem,
+  #thirditem,
+  #fourthitem,
+  #fifthitem {
+    position: relative;
+    /* border: 1px solid red; */
+  }
+
+  #firstitem {
+    top: 0px;
+  }
+
+  #seconditem {
+    top: 340px;
+    left: -115px;
+  }
+
+  #thirditem {
+    left: 123px;
+    top: 340px;
+  }
+
+  #fourthitem {
+    left: -115px;
+    padding-left: 55px;
+    top: 870px;
+  }
+
+  #fifthitem {
+    left: 0px;
+    top: 880px;
+  }
+}
+
+h2 {
+  text-align: center;
+  color: aliceblue;
+}
+
+a {
+  text-decoration: none;
+}
+
+.header {
+  background-color: #3f51b5;
+  width: 100%;
+  height: auto;
+  position: fixed;
+  z-index: 9999;
+  padding-bottom: 16px;
+}
+
+.links {
+  padding-top: 22px;
+}
+
+body,
+html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+
+/* Style tab links */
+.tab-link {
+  margin-top: 10px;
+  background-color: #6573c3;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 10px 16px;
+  font-size: 17px;
+  width: 25%;
+  min-width: 130px;
+  text-align: center;
+}
+
+.active {
+  background-color: #2c387e;
+  color: white;
+}
+.tab-link:hover {
+  background-color: #b2b9e1;
+  /*color: #2C387E;*/
+  color: #0612ba;
+  font-weight: bold;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: white;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+
+.login-button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  padding: 20px 10px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.header {
+  background-color: #3f51b5;
+  width: 100%;
+  height: auto;
+  position: fixed;
+  z-index: 999;
+}
+
+.links {
+  padding-top: 22px;
+}
+
+body,
+html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+
+/* Style tab links */
+.tab-link {
+  margin-top: 10px;
+  background-color: #6573c3;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 10px 16px;
+  font-size: 17px;
+  width: 20%;
+  text-align: center;
+}
+
+.active {
+  background-color: #2c387e;
+  color: white;
+}
+.tab-link:hover {
+  background-color: #b2b9e1;
+  color: #2c387e;
+  font-weight: bold;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: white;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+
+.login-button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  padding: 20px 10px;
+}
+.center {
+  display: block;
+  margin: auto;
+}
+.header-logo {
+  cursor: pointer;
+}

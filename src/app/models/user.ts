@@ -6,6 +6,10 @@ export class User {
   userpassword: string;
   userType: string;
   token?: string;
+  viewConfiguration?: {
+    homeTitle: string;
+    hideGrowthCharts: boolean;
+  };
 
   constructor(id: string, username: string, userpassword: string, userType: string, token?: string) {
     this.id = id;

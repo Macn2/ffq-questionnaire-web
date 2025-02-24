@@ -1,0 +1,29 @@
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+.input-group {
+  display: flex;
+  gap: 8px;
+}
+.form-field-80 {
+  width: calc(100% - 84px - 8px);
+}
+.form-toggle-button {
+  width: fit-content;
+  height: fit-content;
+}
+.error-container {
+  font-size: small;
+}
+.form-submit-button {
+  margin: auto;
+  height: 48px;
+  width: 100%;
+}
+.lb-unit-toggle-group {
+  margin-left: auto;
+  margin-bottom: 16px;
+  margin-top: -16px;
+}

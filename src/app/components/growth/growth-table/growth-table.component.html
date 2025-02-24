@@ -1,0 +1,35 @@
+<table>
+  <thead>
+    <tr>
+      <th>{{ "Date" | translate }}</th>
+      <th>{{ "Age (months)" | translate }}</th>
+      <th>{{ "Gender" | translate }}</th>
+      <th>{{ "Weight (kg)" | translate }}</th>
+      <th>{{ "Length (cm)" | translate }}</th>
+      <th *ngIf="!hidePercentile">{{ "Percentile" | translate }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let record of records">
+      <td>{{ record.timestamp | date : "medium" }}</td>
+      <td>{{ record.age }}</td>
+      <td>{{ record.gender | translate }}</td>
+      <td>{{ record.weight }}</td>
+      <td>{{ record.height }}</td>
+      <td *ngIf="!hidePercentile">
+        <div class="percentile-td" >
+          <span
+            class="percentile-indicator"
+            [style.background]="record.percentile.color"
+          ></span>
+          {{ record.percentile.percentile }}
+        </div>
+      </td>
+    </tr>
+    <tr *ngIf="records.length === 0">
+      <td colspan="6" class="empty-table-message">
+        {{ "No data available" | translate }}
+      </td>
+    </tr>
+  </tbody>
+</table>
